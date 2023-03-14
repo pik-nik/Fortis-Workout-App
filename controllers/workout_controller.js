@@ -39,12 +39,12 @@ router.get("/workouts/:id", (req, res) => {
         const sql2 = "SELECT * FROM exercises JOIN workout_exercise_junction ON exercises.exercise_id = workout_exercise_junction.exercise_id WHERE workout_id = $1;"
         db.query(sql2, [req.params.id], (err, dbJunctionRes) => {
             const exercises = dbJunctionRes.rows
-            // console.log(exercises); //[ { exercise_id: 2, name: 'SQUAT', junction_id: 3, workout_id: 10 } ]
+            console.log("exercises",exercises); //[ { exercise_id: 2, name: 'SQUAT', junction_id: 3, workout_id: 10 } ]
             
             const sql3 = "SELECT * FROM log_workout_entries JOIN workout_exercise_junction ON log_workout_entries.junction_id = workout_exercise_junction.junction_id JOIN exercises on exercises.exercise_id = workout_exercise_junction.exercise_id;"
             db.query (sql3, (err, dbLogRes) => {
                 const logdatas = dbLogRes.rows
-                console.log(logdatas);
+                console.log("log datas",logdatas);
                 res.render("workout_details", { workout, exercises, logdatas })
             })
 

@@ -13,7 +13,7 @@
     <% for (const exercise of exercises){%>
         <p><%=exercise.name%></p>
             <% for (const logdata of logdatas){ %>
-                <% if (logdata.junction_id = exercise.junction_id) {%>
+                <% if (logdata.junction_id === exercise.junction_id) {%>
                     <ul>
                         <li>sets: <%= logdata.sets%></li>
                         <li>reps:<%= logdata.reps%> </li>

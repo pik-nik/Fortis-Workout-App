@@ -31,9 +31,9 @@ CREATE TABLE log_workout_entries (
 );
 
 -- CREATE TABLE workout_exercise_junction2 (
---     id SERIAL PRIMARY KEY, 
---     exercise_id INT REFERENCES exercises(id),
---     workout_id INT REFERENCES workouts(id) 
+--     junction_id SERIAL PRIMARY KEY, 
+--     exercise_id INT REFERENCES exercises(exercise_id),
+--     workout_id INT REFERENCES workouts(workout_id) 
 -- );
 
 
