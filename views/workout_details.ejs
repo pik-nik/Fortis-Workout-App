@@ -12,7 +12,17 @@
     <h4>exercises</h4>
     <% for (const exercise of exercises){%>
         <p><%=exercise.name%></p>
-        <p><a href="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>">edit</a></p>
+            <% for (const logdata of logdatas){ %>
+                <% if (logdata.junction_id = exercise.junction_id) {%>
+                    <ul>
+                        <li>sets: <%= logdata.sets%></li>
+                        <li>reps:<%= logdata.reps%> </li>
+                        <li>weights: <%= logdata.weight%></li>
+                    </ul>
+                <% } %>
+            <% } %>
+        <p><a href="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>">add data</a></p>
+        <p>edit data</p>
     <% } %>
 </div>
 <button> <a href="/workouts/<%=workout.workout_id%>/exercise/new">Add Exercises</a> </button>
