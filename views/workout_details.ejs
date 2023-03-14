@@ -1,18 +1,24 @@
 <h2>Workout Details</h2>
 <h3><%= workout.name %></h3>
 <p><%= workout.workout_date %></p>
-
-<div>
-    <% for (const exercise of exercises){%>
-        <p><%=exercise.name%></p>
-    <% } %>
-</div>
-<p> <a href="/workouts/<%=workout.id%>/exercise/new">Add Exercises</a> </p>
-
-<form action="/workouts/<%=workout.id%>" method="post">
+<a href="/workouts/<%=workout.workout_id%>/edit">edit name/date</a>
+<form action="/workouts/<%=workout.workout_id%>" method="post">
     <input type="hidden" name="_method" value="delete" />
-    <input type="hidden" name="workout_id" value = "<%=workout.id%>"/> 
+    <input type="hidden" name="workout_id" value = "<%=workout.workout_id%>"/> 
     <button>delete workout</button>
 </form>
 
-<a href="/workouts/<%=workout.id%>/edit">edit this workout</a>
+<div>
+    <h4>exercises</h4>
+    <% for (const exercise of exercises){%>
+        <p><%=exercise.name%></p>
+        <p><a href="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>">edit</a></p>
+    <% } %>
+</div>
+<button> <a href="/workouts/<%=workout.workout_id%>/exercise/new">Add Exercises</a> </button>
+
+
+
+
+
+<!-- to get exercise id we must define exercise id better -->

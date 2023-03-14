@@ -1,0 +1,12 @@
+<h2><%=exercise.name%></h2>
+
+<form action="/workouts/<%=exercise.workout_id%>/exercise/<%=exercise.exercise_id%>" method="post">
+    <input type="hidden" name="junction_id" value = "<%=exercise.junction_id%>"/> 
+    <label for="">sets</label>
+    <input type="text" name="sets">
+    <label for="">reps</label>
+    <input type="text" name="reps"/>
+    <label for="">weight</label>
+    <input type="text" name="weight"/>
+    <button>update</button>
+</form>
