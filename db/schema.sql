@@ -1,31 +1,40 @@
 CREATE DATABASE fortis;
 
 CREATE TABLE workouts (
-    id SERIAL PRIMARY KEY, 
+    workout_id SERIAL PRIMARY KEY, 
     name TEXT,
     workout_date TIMESTAMP,
     user_id INTEGER
 );
     -- workout_type_id INTEGER,
-    -- user_id INTEGER,
+
 
 
 CREATE TABLE exercises (
-    id SERIAL PRIMARY KEY, 
+    exercise_id SERIAL PRIMARY KEY, 
     name TEXT 
 );
 
 CREATE TABLE workout_exercise_junction (
-    id SERIAL PRIMARY KEY, 
+    junction_id SERIAL PRIMARY KEY, 
     exercise_id INTEGER,
     workout_id INTEGER 
 );
 
-CREATE TABLE workout_exercise_junction2 (
-    id SERIAL PRIMARY KEY, 
-    exercise_id INT REFERENCES exercises(id),
-    workout_id INT REFERENCES workouts(id) 
+CREATE TABLE log_workout_entries (
+    log_id SERIAL PRIMARY KEY,
+    sets integer,
+    reps integer, 
+    weight integer, 
+    junction_id integer,
+    user_id integer
 );
+
+-- CREATE TABLE workout_exercise_junction2 (
+--     id SERIAL PRIMARY KEY, 
+--     exercise_id INT REFERENCES exercises(id),
+--     workout_id INT REFERENCES workouts(id) 
+-- );
 
 
 -- CREATE TABLE user (
@@ -33,6 +42,15 @@ CREATE TABLE workout_exercise_junction2 (
 --     username TEXT, 
 -- );
 
-SELECT exercise_id FROM workout_exercise_junction WHERE workout_id = 1;
+SELECT * FROM workout_exercise_junction WHERE workout_id = 1;
 
-SELECT name FROM exercises JOIN workout_exercise_junction ON exercises.id = workout_exercise_junction.exercise_id WHERE workout_id = 1;
+SELECT * FROM exercises JOIN workout_exercise_junction ON exercises.exercise_id = workout_exercise_junction.exercise_id WHERE workout_id = 10;
+
+SELECT * FROM log_workout_entries JOIN workout_exercise_junction ON log_workout_entries.junction_id = workout_exercise_junction.junction_id JOIN exercises on exercises.exercise_id = workout_exercise_junction.exercise_id;
+
+ log_id | sets | reps | weight | junction_id | user_id | junction_id | exercise_id | workout_id | exercise_id |  name  
+--------+------+------+--------+-------------+---------+-------------+-------------+------------+-------------+--------
+      1 |    5 |    3 |    120 |           4 |       1 |           4 |           1 |         10 |           1 | SQUATS
+(1 row)
+
+SELECT * FROM workout_exercise_junction JOIN workouts ON workout_exercise_junction.workout_id = workouts.workout_id JOIN exercises ON workout_exercise_junction.exercise_id = exercises.exercise_id where workout_id = 10;
