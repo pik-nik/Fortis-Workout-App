@@ -1,5 +1,5 @@
 <h2>Workout Details</h2>
-<h3><%= workout.title %></h3>
+<h3><%= workout.name %></h3>
 <p><%= workout.workout_date %></p>
 
 <div>
@@ -8,3 +8,11 @@
     <% } %>
 </div>
 <p> <a href="/workouts/<%=workout.id%>/exercise/new">Add Exercises</a> </p>
+
+<form action="/workouts/<%=workout.id%>" method="post">
+    <input type="hidden" name="_method" value="delete" />
+    <input type="hidden" name="workout_id" value = "<%=workout.id%>"/> 
+    <button>delete workout</button>
+</form>
+
+<a href="/workouts/<%=workout.id%>/edit">edit this workout</a>

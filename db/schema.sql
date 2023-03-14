@@ -2,7 +2,7 @@ CREATE DATABASE fortis;
 
 CREATE TABLE workouts (
     id SERIAL PRIMARY KEY, 
-    title TEXT,
+    name TEXT,
     workout_date TIMESTAMP,
     user_id INTEGER
 );

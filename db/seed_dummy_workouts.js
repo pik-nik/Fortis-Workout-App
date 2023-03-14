@@ -7,7 +7,7 @@ let workoutDate = "2023-03-14"
 let userId = 1
 
 for (let i = 0; i < workouts.length; i++) {
-    const sql = "INSERT INTO workouts (title, workout_date, user_id) VALUES ($1, $2, $3);"
+    const sql = "INSERT INTO workouts (name, workout_date, user_id) VALUES ($1, $2, $3);"
     db.query(sql, [workouts[i], workoutDate, userId], (err, dbRes) => {
     })
 }

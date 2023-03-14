@@ -1,12 +1,14 @@
 <h2>Workouts</h2>
 <h3><a href="/workouts/new">Start New Workout</a></h3>
+<!-- add search function to look for old workout -->
+<h3>find a workout</h3> 
 <h3>Workout Log</h3>
     <div>
         <% for (let workout of workouts) { %>
             <a href="/workouts/<%=workout.id%>">
                 <div>
                     <p><%=workout.workout_date%></p>
-                    <p><%=workout.title%></p>
+                    <p><%=workout.name%></p>
                 </div>
             </a> 
         <% } %>

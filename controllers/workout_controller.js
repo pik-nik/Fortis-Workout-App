@@ -12,7 +12,7 @@ router.get("/workouts/new", (req, res) => {
 //add new exercise
 router.get("/workouts/:id/exercise/new", (req, res) => {
     const workoutId = req.params.id
-    
+
     res.render("new_exercise", { workoutId })
 })
 //display workout
@@ -39,6 +39,17 @@ router.get("/workouts", (req, res) => {
     
 })
 
+router.get("/workouts/:id/edit",  (req, res) => {
+    const sql = `SELECT * FROM workouts where id = $1`
+    
+    db.query(sql, [req.params.id], (err, dbRes) => {
+        const workout = dbRes.rows[0]
+        res.render("edit_workout", {workout})
+    })
+})
+
+
+
 router.post("/workouts/:id",  (req, res) => {
     const workoutId = req.params.id
     const sql = "INSERT INTO exercises (name) VALUES ($1) returning id;"
@@ -55,13 +66,30 @@ router.post("/workouts/:id",  (req, res) => {
 
 
 router.post("/workouts",  (req, res) => {
-    const sql = "INSERT INTO workouts (title, workout_date) VALUES ($1, $2) returning id;"
+    const sql = "INSERT INTO workouts (name, workout_date) VALUES ($1, $2) returning id;"
     
-    db.query(sql, [req.body.title, req.body.workout_date], (err, dbRes) => {
+    db.query(sql, [req.body.name, req.body.workout_date], (err, dbRes) => {
          // add later req.session.userId or  res.locals.currentUser.id
         res.redirect(`/workouts/${dbRes.rows[0].id}`)
     })
 })
+
+router.put("/workouts/:id", (req, res) => {
+    const sql = `UPDATE workouts SET name = $1, workout_date = $2 WHERE id = $3;`
+    
+    db.query(sql, [req.body.name, req.body.date, req.body.workout_id], (err, dbRes) => {
+        res.redirect(`/workouts/${req.body.workout_id}`)
+    })
+})
+
+router.delete("/workouts/:id", (req, res) => {
+    const sql = "DELETE FROM workouts WHERE id = $1;"
+    
+    db.query(sql, [req.params.id], (err, dbRes) => {
+        res.redirect('/workouts')
+    })
+})
+
 
 
 module.exports = router
