@@ -1,9 +1,13 @@
 
 
-Project #2: Building Your First Full-stack Application
+# Project #2: Building Your First Full-stack Application
 
-Inspiration
+# Inspiration
 - uploading gym program details
+
+# Planning
+- Schema Tables
+https://whimsical.com/schema-tables-7GaP9mejisBZZMi44Y4iNH#
 
 Gym app 
 upload your workouts 

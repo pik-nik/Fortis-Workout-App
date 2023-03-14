@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortis</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    
+    <div class="container">
+        <header>
+            <nav>
+                <div class="title">
+                    <a href="/">
+                        <img src="https://cdn-icons-png.flaticon.com/512/308/308911.png" alt="" class="logo">
+                    </a>
+                    <a href="/">
+                        <h1>fortis</h1>
+                    </a>
+                </div>
+                <ul>
+                    <li><a href=""><p class="explore">Explore</p></a></li>
+    
+                    <li><a href=""><p class="training">Training</p></a></li>
+                    
+                    <li>
+                        <form action="">
+                            <div class="searchbox_text">
+                                <input type="text" placeholder="search"/>
+                            </div>
+                            <input type="button" value="search">
+                        </form>
+                    </li>
+                    
+                    <!-- % if(isLoggedIn()) { %> -->
+                        <!-- <li> -->
+                            <!-- <p>logged in as %=currentUser.email%> </p>      -->
+                            <!-- <form action="/sessions" method="post"> -->
+                                <!-- <input type="hidden" name="_method" value="delete"/> -->
+                                <!-- <button>logout</button> -->
+                            <!-- </form> -->
+                            <!-- <button> <a href="/users/%=currentUser.id%>/edit">settings</a> </button> -->
+                        <!-- </li> -->
+                    <!-- % } else { %> -->
+                        <a href="/login"><li class="sign_in">Sign In</li></a>  
+                    <!-- % } %> -->
+                    
+                </ul>
+                
+            </nav>
+        </header>
+        <main>
+            
+            <%- body %> 
+            
+        </main>
+        <footer>  &copy; 2023 piknik </footer>
+        
+        
+    </div>
+
+</body>
+</html>
