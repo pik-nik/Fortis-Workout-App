@@ -1,4 +1,10 @@
 <h2>Workout Details</h2>
 <h3><%= workout.title %></h3>
 <p><%= workout.workout_date %></p>
+
+<div>
+    <% for (const exercise of exercises){%>
+        <p><%=exercise.name%></p>
+    <% } %>
+</div>
 <p> <a href="/workouts/<%=workout.id%>/exercise/new">Add Exercises</a> </p>

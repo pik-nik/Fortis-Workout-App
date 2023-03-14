@@ -11,14 +11,21 @@ router.get("/workouts/new", (req, res) => {
 })
 //add new exercise
 router.get("/workouts/:id/exercise/new", (req, res) => {
-    res.render("new_exercise")
+    const workoutId = req.params.id
+    
+    res.render("new_exercise", { workoutId })
 })
 //display workout
-router.get('/workouts/:id', (req, res) => {
-    const sql = `SELECT * FROM workouts WHERE id = $1;`
+router.get("/workouts/:id", (req, res) => {
+    const sql = "SELECT * FROM workouts WHERE id = $1;"
+
     db.query(sql, [req.params.id], (err, dbRes) => {
         const workout = dbRes.rows[0]
-        res.render("workout_details", { workout })
+        const sql2 = "SELECT name FROM exercises JOIN workout_exercise_junction ON exercises.id = workout_exercise_junction.exercise_id WHERE workout_id = $1;"
+        db.query(sql2, [req.params.id], (err, dbJunctionRes) => {
+            const exercises = dbJunctionRes.rows
+            res.render("workout_details", { workout, exercises })
+        })
     })
 })
 // list of workouts
@@ -32,15 +39,27 @@ router.get("/workouts", (req, res) => {
     
 })
 
-router.post('/workouts',  (req, res) => {
+router.post("/workouts/:id",  (req, res) => {
+    const workoutId = req.params.id
+    const sql = "INSERT INTO exercises (name) VALUES ($1) returning id;"
+    
+    db.query(sql, [req.body.name], (err, dbExerciseRes) => {
+         // add later req.session.userId or  res.locals.currentUser.id
+         const exerciseId = dbExerciseRes.rows[0].id
+        const sql2 = "INSERT INTO workout_exercise_junction (exercise_id, workout_id) VALUES ($1, $2)"
+        db.query(sql2, [exerciseId, workoutId], (err, dbJunctionRes) => {
+            res.redirect(`/workouts/${workoutId}`)
+        })
+    })
+})
 
-    console.log(req.body);
-  
-    const sql = `INSERT INTO workouts (title, workout_date) VALUES ($1, $2);`
+
+router.post("/workouts",  (req, res) => {
+    const sql = "INSERT INTO workouts (title, workout_date) VALUES ($1, $2) returning id;"
     
     db.query(sql, [req.body.title, req.body.workout_date], (err, dbRes) => {
          // add later req.session.userId or  res.locals.currentUser.id
-        res.redirect('/workouts')
+        res.redirect(`/workouts/${dbRes.rows[0].id}`)
     })
 })
 
