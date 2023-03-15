@@ -26,11 +26,11 @@
                 </form>
                     <% for (const logdata of logdatas){ %>
                         <% if (logdata.junction_id === exercise.junction_id) {%>
-                            <ul>
+                            <ul class="sets_list">
                                 <li>sets: <%= logdata.sets%></li>
                                 <li>reps:<%= logdata.reps%> </li>
                                 <li>weight: <%= logdata.weight%></li>
-                                <li><a href="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/log/<%=logdata.log_id%>/edit">edit this set</a></li>
+                                <li><button><a href="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/log/<%=logdata.log_id%>/edit">edit this set</a></button></li>
                                 <li><form action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/log/<%=logdata.log_id%>" method="post">
                                     <input type="hidden" name="_method" value="delete" />
                                     <button>delete this set</button>
@@ -38,9 +38,7 @@
                             </ul>
                         <% } %>
                     <% } %>
-                <p><a href="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>">add set</a></p>
-                
-                
+                <button><a href="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>">add set</a></button>
             </div>
         <% } %>
     </div>

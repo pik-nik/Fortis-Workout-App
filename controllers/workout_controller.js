@@ -78,18 +78,17 @@ router.get("/workouts", (req, res) => {
 
     db.query(sql, (err, dbRes) => {
         const workouts = dbRes.rows
-        console.log(workouts);
+        console.log("workouts",workouts);
 
-        for (const workout of workouts) {
-            
-        }
-
-        const sql2 = "SELECT * FROM workout_exercise_junction JOIN exercises ON workout_exercise_junction.exercise_id = exercises.exercise_id WHERE workout_id = $1;"
-        
+        const sql2 = "SELECT * FROM workout_exercise_junction JOIN exercises ON workout_exercise_junction.exercise_id = exercises.exercise_id;"
+        db.query(sql2, (err, dbJunctionRes) => {
+            console.log("exercises in workouts",dbJunctionRes.rows);
+            const exercisesInWorkouts = dbJunctionRes.rows;
+            res.render("workouts", { workouts, exercisesInWorkouts })
+        })
      
 
 
-        res.render("workouts", { workouts })
     })
 })
 
