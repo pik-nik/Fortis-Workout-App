@@ -1,31 +1,52 @@
-<h2>Workout Details</h2>
-<h3><%= workout.name %></h3>
-<p><%= workout.workout_date %></p>
-<a href="/workouts/<%=workout.workout_id%>/edit">edit name/date</a>
-<form action="/workouts/<%=workout.workout_id%>" method="post">
-    <input type="hidden" name="_method" value="delete" />
-    <input type="hidden" name="workout_id" value = "<%=workout.workout_id%>"/> 
-    <button>delete workout</button>
-</form>
-
-<div>
-    <h4>exercises</h4>
-    <% for (const exercise of exercises){%>
-        <p><%=exercise.name%></p>
-            <% for (const logdata of logdatas){ %>
-                <% if (logdata.junction_id === exercise.junction_id) {%>
-                    <ul>
-                        <li>sets: <%= logdata.sets%></li>
-                        <li>reps:<%= logdata.reps%> </li>
-                        <li>weights: <%= logdata.weight%></li>
-                    </ul>
-                <% } %>
-            <% } %>
-        <p><a href="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>">add data</a></p>
-        <p>edit data</p>
-    <% } %>
-</div>
-<button> <a href="/workouts/<%=workout.workout_id%>/exercise/new">Add Exercises</a> </button>
+<head>
+    <link rel="stylesheet" href="/css/workout_details.css">
+</head>
+<body>
+    <section class="workout_details">
+        <h2>Workout Details</h2>
+        <h3><%= workout.name %></h3>
+        <p><%= workout.workout_date %></p>
+        <button><a href="/workouts/<%=workout.workout_id%>/edit">edit workout name/date</a></button>
+        <form action="/workouts/<%=workout.workout_id%>" method="post">
+            <input type="hidden" name="_method" value="delete" />
+            <!-- <input type="hidden" name="workout_id" value = "<%=workout.workout_id%>"/>  -->
+            <button>delete workout</button>
+        </form>
+    </section>
+    
+    <div class="exercises">
+        <h4>Exercises</h4>
+        <% for (const exercise of exercises){%>
+            <div class="exercise_log">
+                <p><%=exercise.name%></p>
+                <button><a href="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/edit">edit exercise name</a></button>
+                <form action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>" method="post">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button>delete exercise</button>
+                </form>
+                    <% for (const logdata of logdatas){ %>
+                        <% if (logdata.junction_id === exercise.junction_id) {%>
+                            <ul>
+                                <li>sets: <%= logdata.sets%></li>
+                                <li>reps:<%= logdata.reps%> </li>
+                                <li>weight: <%= logdata.weight%></li>
+                                <li><a href="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/log/<%=logdata.log_id%>/edit">edit this set</a></li>
+                                <li><form action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/log/<%=logdata.log_id%>" method="post">
+                                    <input type="hidden" name="_method" value="delete" />
+                                    <button>delete this set</button>
+                                </form></li>
+                            </ul>
+                        <% } %>
+                    <% } %>
+                <p><a href="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>">add set</a></p>
+                
+                
+            </div>
+        <% } %>
+    </div>
+    <button> <a href="/workouts/<%=workout.workout_id%>/exercise/new">Add Exercise</a> </button>
+    
+</body>
 
 
 

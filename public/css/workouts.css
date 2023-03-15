@@ -1,0 +1,20 @@
+body {
+
+}
+.nav {
+    display: grid; 
+    grid-template-columns: 1fr 1fr;
+    padding-bottom: 15px;
+}
+
+.log {
+    border: 1px solid black;
+}
+
+.entry {
+    border: 2px solid pink;
+}
+
+p {
+    /* color: pink; */
+}

@@ -14,6 +14,28 @@ router.get("/workouts/:id/exercise/new", (req, res) => {
     const workoutId = req.params.id
     res.render("new_exercise", { workoutId })
 })
+
+router.get("/workouts/:workoutid/exercise/:exerciseid/log/:logid/edit", (req, res) => {
+    const sql = "SELECT * FROM log_workout_entries JOIN workout_exercise_junction ON log_workout_entries.junction_id = workout_exercise_junction.junction_id JOIN exercises ON workout_exercise_junction.exercise_id = exercises.exercise_id WHERE log_id = $1;"
+    
+    db.query(sql, [req.params.logid], (err, dbRes) => {
+        const log = dbRes.rows[0]
+        console.log(log);
+        // res.send("testing")
+        res.render("edit_log", {log})
+    })
+})
+
+// edit exercise name 
+router.get("/workouts/:workoutid/exercise/:exerciseid/edit", (req, res) => {
+    const workoutId = req.params.workoutid
+    const exerciseId = req.params.exerciseid
+    const sql = "SELECT * FROM exercises WHERE exercise_id = $1"
+    db.query(sql, [exerciseId], (err, dbRes) => {
+        const exercise = dbRes.rows[0]
+        res.render("edit_exercise", {workoutId, exerciseId, exercise})
+    })
+}) 
 //display exercise in workout
 router.get("/workouts/:workoutid/exercise/:exerciseid", (req, res) => {
     const sql = "SELECT * FROM exercises where exercise_id = $1"
@@ -26,7 +48,7 @@ router.get("/workouts/:workoutid/exercise/:exerciseid", (req, res) => {
         db.query(sql2, [exerciseId, workoutId], (err, dbJunctionRes) => {
             const junctionId = dbJunctionRes.rows[0].junction_id
             console.log(junctionId, "junction id");
-            res.render("exercise_in_workout_details", { exercise, workoutId, exerciseId, junctionId })
+            res.render("new_log", { exercise, workoutId, exerciseId, junctionId })
         })
     })
 })
@@ -36,7 +58,7 @@ router.get("/workouts/:id", (req, res) => {
 
     db.query(sql, [req.params.id], (err, dbRes) => {
         const workout = dbRes.rows[0]
-        const sql2 = "SELECT * FROM exercises JOIN workout_exercise_junction ON exercises.exercise_id = workout_exercise_junction.exercise_id WHERE workout_id = $1;"
+        const sql2 = "SELECT * FROM exercises JOIN workout_exercise_junction ON exercises.exercise_id = workout_exercise_junction.exercise_id WHERE workout_id = $1 ORDER BY junction_id;"
         db.query(sql2, [req.params.id], (err, dbJunctionRes) => {
             const exercises = dbJunctionRes.rows
             console.log("exercises",exercises); //[ { exercise_id: 2, name: 'SQUAT', junction_id: 3, workout_id: 10 } ]
@@ -47,9 +69,6 @@ router.get("/workouts/:id", (req, res) => {
                 console.log("log datas",logdatas);
                 res.render("workout_details", { workout, exercises, logdatas })
             })
-
-
-            
         })
     })
 })
@@ -59,6 +78,17 @@ router.get("/workouts", (req, res) => {
 
     db.query(sql, (err, dbRes) => {
         const workouts = dbRes.rows
+        console.log(workouts);
+
+        for (const workout of workouts) {
+            
+        }
+
+        const sql2 = "SELECT * FROM workout_exercise_junction JOIN exercises ON workout_exercise_junction.exercise_id = exercises.exercise_id WHERE workout_id = $1;"
+        
+     
+
+
         res.render("workouts", { workouts })
     })
 })
@@ -72,12 +102,7 @@ router.get("/workouts/:id/edit",  (req, res) => {
     })
 })
 
-router.post("/workouts/:workoutid/exercise/:exerciseid",  (req, res) => {
-    // const sql1 = "SELECT * from workout_exercise_junction where workout_id = $1 and exercise_id = $2;"
-    // db.query(sql1, [req.params.workoutid], (err, dbJunctionRes) => {
-
-    // })
-    
+router.post("/workouts/:workoutid/exercise/:exerciseid",  (req, res) => {    
     const sql = "INSERT INTO log_workout_entries (sets, reps, weight, junction_id, user_id) VALUES ($1, $2, $3, $4, $5);"
     // hard coded user id for now
     console.log("junction id on post",req.body.junction_id);
@@ -124,10 +149,39 @@ router.post("/workouts",  (req, res) => {
     })
 })
 
+router.put("/workouts/:workoutid/exercise/:exerciseid/log/:logid", (req, res) => {
+    const sql = "UPDATE log_workout_entries SET sets = $1, reps = $2, weight =$3 WHERE log_id = $4;"
+
+    db.query(sql, [req.body.sets, req.body.reps, req.body.weight, req.params.logid], (err, dbRes) => {
+        res.redirect(`/workouts/${req.params.workoutid}`)
+    })
+})
+
+router.put("/workouts/:workoutid/exercise/:exerciseid", (req, res) => {
+    const sql = "UPDATE exercises SET name = $1 WHERE exercise_id = $2;"
+    db.query(sql, [req.body.name, req.params.exerciseid], (err, dbRes) => {
+        res.redirect(`/workouts/${req.params.workoutid}`)
+    })
+})
+
 router.put("/workouts/:id", (req, res) => {
     const sql = "UPDATE workouts SET name = $1, workout_date = $2 WHERE workout_id = $3;"
     db.query(sql, [req.body.name, req.body.date, req.params.id], (err, dbRes) => {
         res.redirect(`/workouts/${req.params.id}`)
+    })
+})
+
+router.delete("/workouts/:workoutid/exercise/:exerciseid/log/:logid", (req, res) => {
+    const sql = "DELETE FROM log_workout_entries WHERE log_id = $1;" 
+    db.query(sql, [req.params.logid], (err, dbRes) => {
+        res.redirect(`/workouts/${req.params.workoutid}`)
+    })
+})
+
+router.delete("/workouts/:workoutid/exercise/:exerciseid", (req, res) => {
+    const sql = "DELETE FROM exercises WHERE exercise_id = $1;"
+    db.query(sql, [req.params.exerciseid], (err, dbRes) => {
+        res.redirect(`/workouts/${req.params.workoutid}`)
     })
 })
 

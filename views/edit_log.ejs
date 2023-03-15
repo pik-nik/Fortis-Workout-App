@@ -1,0 +1,12 @@
+<h2>edit set log entry for <%= log.name%></h2>
+<form action="/workouts/<%=log.workout_id%>/exercise/<%=log.exercise_id%>/log/<%=log.log_id%>" method="post">
+    <input type="hidden" name="junction_id" value = "<%=log.junction_id%>"/> 
+    <input type="hidden" name="_method" value="put"/>
+    <label for="">sets</label>
+    <input type="text" name="sets" value="<%=log.sets%>">
+    <label for="">reps</label>
+    <input type="text" name="reps" value="<%=log.reps%>"/>
+    <label for="">weight</label>
+    <input type="text" name="weight" value="<%=log.weight%>"/>
+    <button>edit</button>
+</form>
