@@ -1,8 +1,8 @@
 const db = require("./../db")
 
-let workouts = ["Block 1 Day 1", "Block 1 Day 2", "Block 2 Day 3", "Block 1 Day 4", "Block 2 Day 1", "Block 2 Day 2", "Block 3 Day 3", "Block 3 Day 4"]
+let workouts = ["Week 1 Day 1", "Week 1 Day 2", "Week 1 Day 3", "Week 1 Day 4", "Week 2 Day 1", "Week 2 Day 2", "Week 2 Day 3", "Week 2 Day 4"]
 
-let workoutDate = "2023-03-14"
+let workoutDate = new Date();
 
 let userId = 1
 

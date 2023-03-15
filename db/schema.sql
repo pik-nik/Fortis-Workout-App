@@ -8,7 +8,7 @@ DROP TABLE log_workout_entries;
 CREATE TABLE workouts (
     workout_id SERIAL PRIMARY KEY, 
     name TEXT,
-    workout_date DATE NOT NULL DEFAULT CURRENT_DATE,
+    workout_date DATE,
     user_id INTEGER
 );
 
@@ -31,6 +31,8 @@ CREATE TABLE log_workout_entries (
     junction_id integer,
     user_id integer
 );
+
+-- node seed_dummy_exercises;
 
 -- CREATE TABLE workout_exercise_junction2 (
 --     junction_id SERIAL PRIMARY KEY, 
@@ -62,3 +64,5 @@ SELECT * FROM log_workout_entries JOIN workout_exercise_junction ON log_workout_
 SELECT * FROM workout_exercise_junction JOIN exercises ON workout_exercise_junction.exercise_id = exercises.exercise_id WHERE workout_id = 2;
 
 SELECT * FROM exercises JOIN workout_exercise_junction ON exercises.exercise_id = workout_exercise_junction.exercise_id WHERE name = 'BARBELL ROW';
+
+SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') from workouts;
