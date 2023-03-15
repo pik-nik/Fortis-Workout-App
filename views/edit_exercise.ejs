@@ -1,8 +1,23 @@
 <h2>edit exercise name</h2>
 
-<form action="/workouts/<%=workoutId%>/exercise/<%=exerciseId%>" method="post">
+<form action="/workouts/<%=workoutId%>/exercise/<%=currentExercise.exercise_id%>" method="post">
     <input type="hidden" name="_method" value="put"/>
-    <label for="">name</label>
-    <input type="text" name="name" value="<%=exercise.name%>"/>
+    <input type="hidden" name="junction_id" value="<%=junctionId%>"/>
+    <label for="name"> Exercise Name </label>
+    <select name="name" id="name">
+        <option value="">--Please choose an option--</option>
+        <% for (const exercise of exercises) { %>
+            <option value="<%=exercise.name%>"><%=exercise.name%></option>
+        <% } %>
+    </select>
+    <input type="submit" value="Submit">
+</form>
+
+
+<form action="/workouts/<%=workoutId%>/exercise/<%=currentExercise.exercise_id%>" method="post">
+    <input type="hidden" name="_method" value="put"/>
+    <input type="hidden" name="junction_id" value="<%=junctionId%>"/>
+    <label for="">Name is not on list? Edit here</label>
+    <input type="text" name="name" value="<%=currentExercise.name%>"/>
     <button>edit</button>
 </form>

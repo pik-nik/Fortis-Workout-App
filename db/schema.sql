@@ -8,7 +8,7 @@ DROP TABLE log_workout_entries;
 CREATE TABLE workouts (
     workout_id SERIAL PRIMARY KEY, 
     name TEXT,
-    workout_date TIMESTAMP,
+    workout_date DATE NOT NULL DEFAULT CURRENT_DATE,
     user_id INTEGER
 );
 
@@ -62,5 +62,3 @@ SELECT * FROM log_workout_entries JOIN workout_exercise_junction ON log_workout_
 SELECT * FROM workout_exercise_junction JOIN exercises ON workout_exercise_junction.exercise_id = exercises.exercise_id WHERE workout_id = 2;
 
 SELECT * FROM exercises JOIN workout_exercise_junction ON exercises.exercise_id = workout_exercise_junction.exercise_id WHERE name = 'BARBELL ROW';
-
-SELECT * FROM exercises WHERE name = 'BARBELL ROW';

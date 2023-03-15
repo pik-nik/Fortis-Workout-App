@@ -1,7 +1,20 @@
 <h2>Add a new exercise</h2>
 
+
 <form action="/workouts/<%=workoutId%>" method="post">
-    <label for="">name</label>
+    <label for="name"> Exercise Name </label>
+    <select name="name" id="name">
+        <option value="">--Please choose an option--</option>
+        <% for (const exercise of exercises) { %>
+            <option value="<%=exercise.name%>"><%=exercise.name%></option>
+        <% } %>
+    </select>
+    <input type="submit" value="Submit">
+</form>
+
+
+<form action="/workouts/<%=workoutId%>" method="post">
+    <label for="">Exercise not in list? Add exercise here:</label>
     <input type="text" name="name"/>
     <button>add</button>
 </form>
