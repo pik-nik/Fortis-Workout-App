@@ -5,7 +5,7 @@
     <section class="workout_details">
         <h2>Workout Details</h2>
         <h3><%= workout.name %></h3>
-        <p><%= workout.workout_date %></p>
+        <p><%= workout.to_char %></p>
         <button><a href="/workouts/<%=workout.workout_id%>/edit">edit workout name/date</a></button>
         <form action="/workouts/<%=workout.workout_id%>" method="post">
             <input type="hidden" name="_method" value="delete" />

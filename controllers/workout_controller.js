@@ -15,7 +15,6 @@ router.get("/workouts/:id/exercise/new", (req, res) => {
     
     const sql = "SELECT * FROM exercises ORDER BY name ASC;"
     db.query(sql, (err, dbRes) => {
-        console.log(dbRes.rows);
         const exercises = dbRes.rows
         res.render("new_exercise", { workoutId, exercises })
     })
@@ -27,7 +26,6 @@ router.get("/workouts/:workoutid/exercise/:exerciseid/log/:logid/edit", (req, re
     
     db.query(sql, [req.params.logid], (err, dbRes) => {
         const log = dbRes.rows[0]
-        console.log(log);
         res.render("edit_log", { log })
     })
 })
@@ -38,8 +36,6 @@ router.get("/workouts/:workoutid/exercise/:exerciseid/edit", (req, res) => {
     const sql1 = "SELECT * FROM exercises WHERE exercise_id = $1"
     db.query(sql1, [exerciseId], (err, dbRes) => {
         const currentExercise = dbRes.rows[0]
-        console.log(currentExercise);
-
         const sql2 = "SELECT * FROM exercises ORDER BY name ASC;"
         db.query(sql2, (err, dbALLExRes) => {
             const exercises = dbALLExRes.rows
@@ -47,7 +43,6 @@ router.get("/workouts/:workoutid/exercise/:exerciseid/edit", (req, res) => {
             const sql3 = "SELECT * FROM workout_exercise_junction WHERE workout_id = $1 and exercise_id = $2"
             db.query(sql3, [workoutId, exerciseId], (err, dbJunctionRes) => {
                 const junctionId = dbJunctionRes.rows[0].junction_id
-                console.log(junctionId);
                 res.render("edit_exercise", {workoutId, exerciseId, currentExercise, exercises, junctionId})
             })
         })
@@ -60,29 +55,25 @@ router.get("/workouts/:workoutid/exercise/:exerciseid", (req, res) => {
     const exerciseId = req.params.exerciseid
     db.query(sql, [exerciseId], (err, dbRes) => {
         const exercise = dbRes.rows[0]
-        console.log(exercise);
-        const sql2 = "SELECT * FROM workout_exercise_junction where exercise_id = $1 and workout_id = $2" // check junctions returning a few times here 
+        const sql2 = "SELECT * FROM workout_exercise_junction where exercise_id = $1 and workout_id = $2" 
         db.query(sql2, [exerciseId, workoutId], (err, dbJunctionRes) => {
             const junctionId = dbJunctionRes.rows[0].junction_id
-            console.log(junctionId, "junction id");
             res.render("new_log", { exercise, workoutId, exerciseId, junctionId })
         })
     })
 })
 //display workout
 router.get("/workouts/:id", (req, res) => {
-    const sql = "SELECT * FROM workouts WHERE workout_id = $1;"
+    const sql = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') from workouts WHERE workout_id = $1;"
 
     db.query(sql, [req.params.id], (err, dbRes) => {
         const workout = dbRes.rows[0]
         const sql2 = "SELECT * FROM exercises JOIN workout_exercise_junction ON exercises.exercise_id = workout_exercise_junction.exercise_id WHERE workout_id = $1 ORDER BY junction_id;"
         db.query(sql2, [req.params.id], (err, dbJunctionRes) => {
             const exercises = dbJunctionRes.rows
-            console.log("exercises",exercises); //[ { exercise_id: 2, name: 'SQUAT', junction_id: 3, workout_id: 10 } ]
             const sql3 = "SELECT * FROM log_workout_entries JOIN workout_exercise_junction ON log_workout_entries.junction_id = workout_exercise_junction.junction_id JOIN exercises on exercises.exercise_id = workout_exercise_junction.exercise_id;"
             db.query (sql3, (err, dbLogRes) => {
                 const logdatas = dbLogRes.rows
-                console.log("log datas",logdatas);
                 res.render("workout_details", { workout, exercises, logdatas })
             })
         })
@@ -90,7 +81,7 @@ router.get("/workouts/:id", (req, res) => {
 })
 // list of workouts
 router.get("/workouts", (req, res) => {
-    const sql = "SELECT * FROM workouts ORDER BY workout_date DESC;"
+    const sql = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') FROM workouts ORDER BY workout_date DESC;"
 
     db.query(sql, (err, dbRes) => {
         const workouts = dbRes.rows
