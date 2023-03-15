@@ -3,7 +3,7 @@
 <form action="/workouts/<%= workout.workout_id%>" method="post">
     <input type="hidden" name="_method" value="put"/>
     <input type="hidden" name="workout_id" value="<%=workout.workout_id%>"/>
-    <input type="date" name="date" value="<%=workout.date%>">
+    <input type="date" name="date" value="<%=workout.to_char%>">
     <label for="">Workout Name</label>
     <input type="text" name="name" value="<%=workout.name%>"/>
     <button>update</button>

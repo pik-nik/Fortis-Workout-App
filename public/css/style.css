@@ -32,6 +32,7 @@ header {
 header h1 {
     color: #132e2d;
     font-size: 2em;
+    font-family: 'Barlow', sans-serif;
 }
 
 nav {

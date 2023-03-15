@@ -97,7 +97,7 @@ router.get("/workouts", (req, res) => {
 })
 
 router.get("/workouts/:id/edit",  (req, res) => {
-    const sql = "SELECT * FROM workouts WHERE workout_id = $1"
+    const sql = "SELECT *, TO_CHAR(workout_date, 'yyyy-mm-dd') FROM workouts WHERE workout_id = $1"
     
     db.query(sql, [req.params.id], (err, dbRes) => {
         const workout = dbRes.rows[0]
@@ -106,49 +106,62 @@ router.get("/workouts/:id/edit",  (req, res) => {
 })
 
 router.post("/workouts/:workoutid/exercise/:exerciseid",  (req, res) => {    
-    const sql = "INSERT INTO log_workout_entries (sets, reps, weight, junction_id, user_id) VALUES ($1, $2, $3, $4, $5);"
-    // hard coded user id for now
-    console.log("junction id on post",req.body.junction_id);
-    db.query(sql, [req.body.sets, req.body.reps, req.body.weight, req.body.junction_id, 1], (err, dbRes) => {
-        res.redirect(`/workouts/${req.params.workoutid}`)
-    })
+    if (!req.body.sets || !req.body.reps || !req.body.weight) {
+        res.redirect(`/workouts/${req.params.workoutid}/exercise/${req.params.exerciseid}`)
+    } else {
+        const sql = "INSERT INTO log_workout_entries (sets, reps, weight, junction_id, user_id) VALUES ($1, $2, $3, $4, $5);"
+        // hard coded user id for now
+        console.log("junction id on post",req.body.junction_id);
+        db.query(sql, [req.body.sets, req.body.reps, req.body.weight, req.body.junction_id, 1], (err, dbRes) => {
+            res.redirect(`/workouts/${req.params.workoutid}`)
+        })
+    }
 })
 
 router.post("/workouts/:id",  (req, res) => {
-    const workoutId = req.params.id
-    // if else statement to stop duplicate exercise names
-    const exerciseName = req.body.name 
-    const sql1 = "SELECT * FROM exercises WHERE name = $1;"
-    db.query (sql1, [exerciseName.toUpperCase()], (err, dbSelectExerciseRes) => {
-        if (dbSelectExerciseRes.rows.length !== 0) {
-            const exerciseId = dbSelectExerciseRes.rows[0].exercise_id
-            // console.log("exerciseId from db", exerciseId);
-            const sql2 = "INSERT INTO workout_exercise_junction (exercise_id, workout_id) VALUES ($1, $2)"
-                
-                db.query(sql2, [exerciseId, workoutId], (err, dbJunctionRes) => {
-                    res.redirect(`/workouts/${workoutId}/exercise/${exerciseId}`)
+    if (!req.body.name) {
+        res.redirect(`/workouts/${req.params.id}/exercise/new`)
+    } else {
+        const workoutId = req.params.id
+        // if else statement to stop duplicate exercise names
+        const exerciseName = req.body.name 
+        const sql1 = "SELECT * FROM exercises WHERE name = $1;"
+        db.query (sql1, [exerciseName.toUpperCase()], (err, dbSelectExerciseRes) => {
+            if (dbSelectExerciseRes.rows.length !== 0) {
+                const exerciseId = dbSelectExerciseRes.rows[0].exercise_id
+                // console.log("exerciseId from db", exerciseId);
+                const sql2 = "INSERT INTO workout_exercise_junction (exercise_id, workout_id) VALUES ($1, $2)"
+                    
+                    db.query(sql2, [exerciseId, workoutId], (err, dbJunctionRes) => {
+                        res.redirect(`/workouts/${workoutId}/exercise/${exerciseId}`)
+                    })
+            } else {
+                const sql2 = "INSERT INTO exercises (name) VALUES ($1) returning exercise_id;"
+                db.query(sql2, [exerciseName.toUpperCase()], (err, dbInsertExerciseRes) => {
+                    const exerciseId = dbInsertExerciseRes.rows[0].exercise_id
+                    // console.log("exerciseId new", exerciseId);
+                    const sql3 = "INSERT INTO workout_exercise_junction (exercise_id, workout_id) VALUES ($1, $2)"
+    
+                    db.query(sql3, [exerciseId, workoutId], (err, dbJunctionRes) => {
+                        res.redirect(`/workouts/${workoutId}/exercise/${exerciseId}`)
+                    })
                 })
-        } else {
-            const sql2 = "INSERT INTO exercises (name) VALUES ($1) returning exercise_id;"
-            db.query(sql2, [exerciseName.toUpperCase()], (err, dbInsertExerciseRes) => {
-                const exerciseId = dbInsertExerciseRes.rows[0].exercise_id
-                // console.log("exerciseId new", exerciseId);
-                const sql3 = "INSERT INTO workout_exercise_junction (exercise_id, workout_id) VALUES ($1, $2)"
-
-                db.query(sql3, [exerciseId, workoutId], (err, dbJunctionRes) => {
-                    res.redirect(`/workouts/${workoutId}/exercise/${exerciseId}`)
-                })
-            })
-        }
-    })
+            }
+        })
+    }
 })
 
-router.post("/workouts",  (req, res) => {
-    const sql = "INSERT INTO workouts (name, workout_date) VALUES ($1, $2) returning workout_id;"
-    db.query(sql, [req.body.name, req.body.workout_date], (err, dbRes) => {
-         // add later req.session.userId or  res.locals.currentUser.id
-        res.redirect(`/workouts/${dbRes.rows[0].workout_id}`)
-    })
+router.post("/workouts",  (req, res) => {  
+    if (!req.body.name || !req.body.workout_date) {
+        res.redirect("/workouts/new")
+        return
+    } else {
+        const sql = "INSERT INTO workouts (name, workout_date) VALUES ($1, $2) returning workout_id;"
+        db.query(sql, [req.body.name, req.body.workout_date], (err, dbRes) => {
+             // add later req.session.userId or  res.locals.currentUser.id
+            res.redirect(`/workouts/${dbRes.rows[0].workout_id}`)
+        })
+    }
 })
 
 router.put("/workouts/:workoutid/exercise/:exerciseid/log/:logid", (req, res) => {

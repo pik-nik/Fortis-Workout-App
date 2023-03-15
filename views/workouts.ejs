@@ -10,21 +10,24 @@
     </section>
     
     <section class="log">
-        <h3>Workout Log</h3>
+        <h4>Workout Log</h4>
         <div>
             <% for (let workout of workouts) { %>
                 <a href="/workouts/<%=workout.workout_id%>">
-                    <div class="entry">
-                        <p><%=workout.name%></p>
-                        <p><%=workout.to_char%></p>
-
-                        <% for (const exercise of exercisesInWorkouts) { %>
-                            <% if (workout.workout_id === exercise.workout_id) { %>
-                                    <ul>
-                                        <li><%= exercise.name %></li>
-                                    </ul>
-                                <% } %> 
-                        <% } %> 
+                    <div class="workout_entry">
+                        <div class="workout_details">
+                            <p id="workout_name"><%=workout.name%></p>
+                            <p id="workout_date"><%=workout.to_char%></p>
+                        </div>
+                        <div class="exercise_details">
+                            <% for (const exercise of exercisesInWorkouts) { %>
+                                <% if (workout.workout_id === exercise.workout_id) { %>
+                                        <ul>
+                                            <li class="exercise_name"><%= exercise.name %></li>
+                                        </ul>
+                                    <% } %> 
+                            <% } %> 
+                        </div>
                     </div>
                 </a> 
             <% } %>

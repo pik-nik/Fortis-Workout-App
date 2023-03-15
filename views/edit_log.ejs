@@ -3,10 +3,10 @@
     <input type="hidden" name="junction_id" value = "<%=log.junction_id%>"/> 
     <input type="hidden" name="_method" value="put"/>
     <label for="">sets</label>
-    <input type="text" name="sets" value="<%=log.sets%>">
+    <input type="number" min="1" name="sets" value="<%=log.sets%>">
     <label for="">reps</label>
-    <input type="text" name="reps" value="<%=log.reps%>"/>
+    <input type="numbeer" min="1" name="reps" value="<%=log.reps%>"/>
     <label for="">weight</label>
-    <input type="text" name="weight" value="<%=log.weight%>"/>
+    <input type="number" min="0" step="0.25" name="weight" value="<%=log.weight%>"/>
     <button>edit</button>
 </form>

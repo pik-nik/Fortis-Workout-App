@@ -27,7 +27,7 @@ CREATE TABLE log_workout_entries (
     log_id SERIAL PRIMARY KEY,
     sets integer,
     reps integer, 
-    weight integer, 
+    weight real, 
     junction_id integer,
     user_id integer
 );

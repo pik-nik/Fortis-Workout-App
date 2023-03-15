@@ -10,4 +10,5 @@ for (let i = 0; i < workouts.length; i++) {
     const sql = "INSERT INTO workouts (name, workout_date, user_id) VALUES ($1, $2, $3);"
     db.query(sql, [workouts[i], workoutDate, userId], (err, dbRes) => {
     })
+    workoutDate = new Date(workoutDate.getTime() + 86400000)
 }

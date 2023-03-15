@@ -1,5 +1,5 @@
-body {
-
+* {
+    /* border: 1px solid red; */
 }
 .nav {
     display: grid; 
@@ -8,13 +8,38 @@ body {
 }
 
 .log {
-    border: 1px solid black;
+    width: 80%;
+    margin: 0 auto;
 }
 
-.entry {
-    border: 2px solid pink;
+.workout_entry {
+    background-color: #522d80 ;
+    color: white;
+    display: grid; 
+    grid-template-columns: 40% 60%;
+    margin: 10px 0;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px gray;
 }
 
-p {
-    /* color: pink; */
+#workout_name {
+    font-size: 1.25em;
+}
+
+#workout_date {
+    font-size: 0.6em;
+}
+
+.exercise_details ul {
+    padding: 0;
+}
+
+.exercise_name {
+    list-style: none;
+    font-size: 0.75em;
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    display: block;
 }
