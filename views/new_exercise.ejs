@@ -1,20 +1,37 @@
-<h2>Add a new exercise</h2>
+<head>
+    <link rel="stylesheet" href="/css/form.css">
+</head>
+<body>
+    <section class="form_container">
+        <h2>Add a new exercise</h2>
+        <form action="/workouts/<%=workoutId%>" method="post">
+            <ul>
+                <li>
+                    <label for="name"> Exercise Name </label>
+                    <select name="name" id="name">
+                        <option value="">--Please choose an option--</option>
+                        <% for (const exercise of exercises) { %>
+                            <option value="<%=exercise.name%>"><%=exercise.name%></option>
+                        <% } %>
+                    </select>
+                    <input type="submit" value="Add">
+                </li>
+            </ul>
+        </form>
+        <form action="/workouts/<%=workoutId%>" method="post">
+            <ul>
+                <li>
+                    <label for="">Exercise not in list? Add exercise here:</label>
+                    <input type="text" name="name"/>
+                    <button>Add</button>
+                </li>
+                <li>
+                </li>
+            </ul>
+        </form>
+
+    </section>
 
 
-<form action="/workouts/<%=workoutId%>" method="post">
-    <label for="name"> Exercise Name </label>
-    <select name="name" id="name">
-        <option value="">--Please choose an option--</option>
-        <% for (const exercise of exercises) { %>
-            <option value="<%=exercise.name%>"><%=exercise.name%></option>
-        <% } %>
-    </select>
-    <input type="submit" value="Submit">
-</form>
 
-
-<form action="/workouts/<%=workoutId%>" method="post">
-    <label for="">Exercise not in list? Add exercise here:</label>
-    <input type="text" name="name"/>
-    <button>add</button>
-</form>
+</body>

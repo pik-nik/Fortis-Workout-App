@@ -1,12 +1,31 @@
-<h2><%=exercise.name%></h2>
-<h3>add set log entry</h3>
-<form action="/workouts/<%=workoutId%>/exercise/<%=exerciseId%>" method="post">
-    <input type="hidden" name="junction_id" value = "<%=junctionId%>"/> 
-    <label for="">sets</label>
-    <input type="number" min="1" name="sets">
-    <label for="">reps</label>
-    <input type="number" min="1" name="reps"/>
-    <label for="">weight</label>
-    <input type="number" min="0" step="0.25" name="weight"/>
-    <button>add</button>
-</form>
+<head>
+    <link rel="stylesheet" href="/css/form.css">
+</head>
+<body>
+    <section class="form_container">
+        <h2>Add set for <%=exercise.name%></h2>
+        <form action="/workouts/<%=workoutId%>/exercise/<%=exerciseId%>" method="post">
+            <input type="hidden" name="junction_id" value = "<%=junctionId%>"/> 
+            <ul>
+                <li>
+                    <label for="">Sets</label>
+                    <input type="number" min="1" name="sets">
+                    <span>Enter number of sets</span>
+                </li>
+                <li>
+                    <label for="">Reps</label>
+                    <input type="number" min="1" name="reps"/>
+                    <span>Enter number of reps</span>
+                </li>
+                <li>
+                    <label for="">Weight</label>
+                    <input type="number" min="0" step="0.25" name="weight"/>
+                    <span>Enter weight</span>
+                </li>
+                <li>
+                    <button>Add</button>
+                </li>
+            </ul>
+        </form>
+    </section>
+</body>

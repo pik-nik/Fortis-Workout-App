@@ -7,21 +7,37 @@
     padding-bottom: 15px;
 }
 
+.nav h3 a:hover {
+    color: #4B2374;
+}
+
 .log {
     width: 80%;
     margin: 0 auto;
 }
 
 .workout_entry {
-    background-color: #522d80 ;
+    background-color: #32174d ;
     color: white;
     display: grid; 
     grid-template-columns: 40% 60%;
     margin: 10px 0;
-    padding: 5px;
+    padding: 10px;
     border-radius: 5px;
     box-shadow: 0 4px 8px gray;
 }
+
+.workout_entry:hover {
+    background-color: #4B2374;
+    color: white;
+    display: grid; 
+    grid-template-columns: 40% 60%;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px gray;
+}
+
 
 #workout_name {
     font-size: 1.25em;

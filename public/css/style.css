@@ -21,6 +21,10 @@ a {
 
 img {
     width: 100%;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 header {
@@ -30,9 +34,12 @@ header {
 }
 
 header h1 {
-    color: #132e2d;
-    font-size: 2em;
+    color: #522d80;
+    font-size: 3em;
     font-family: 'Barlow', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 nav {

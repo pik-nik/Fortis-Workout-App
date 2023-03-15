@@ -1,11 +1,27 @@
-<h2>Create a new workout</h2>
-<p>Please fill out both name and date</p>
-<form action="/workouts" method="post">
-    <label for="">Date</label>
-    <input type="date" name="workout_date">
-    <label for="">Workout Name</label>
-    <input type="text" name="name"/>
-    <!-- <label for="">workout type</label>
-    <input type="text" name="name"/> -->
-    <button>create</button>
-</form>
+<head>
+    <link rel="stylesheet" href="/css/form.css">
+</head>
+<body>
+    <section class="form_container">
+        <h2>Create a new workout</h2>
+        <form action="/workouts" method="post">
+            <ul>
+                <li>
+                    <label for="date">Date</label>
+                    <input type="date" name="workout_date">
+                    <span>Enter the workout date</span>
+                </li>
+                <li>
+                    <label for="name">Workout Name</label>
+                    <input type="text" name="name"/>
+                    <span>Enter the workout name</span>
+                </li>
+                <li>
+                    <button>Create</button>
+                </li>
+            </ul>
+            <!-- <label for="">workout type</label>
+            <input type="text" name="name"/> -->
+        </form>
+    </section>
+</body>

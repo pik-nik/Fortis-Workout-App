@@ -1,23 +1,40 @@
-<h2>edit exercise name</h2>
+<head>
+    <link rel="stylesheet" href="/css/form.css">
+</head>
+<body>
+    <section  class="form_container">
+        <h2>Edit exercise name</h2>
+        <form action="/workouts/<%=workoutId%>/exercise/<%=currentExercise.exercise_id%>" method="post">
+            <input type="hidden" name="_method" value="put"/>
+            <input type="hidden" name="junction_id" value="<%=junctionId%>"/>
+            <ul>
+                <li>
+                    <label for="name"> Exercise Name </label>
+                    <select name="name" id="name">
+                        <option value="">--Please choose an option--</option>
+                        <% for (const exercise of exercises) { %>
+                            <option value="<%=exercise.name%>"><%=exercise.name%></option>
+                        <% } %>
+                    </select>
+                    <input type="submit" value="Update">
+                </li>
+            </ul>
+        </form>
+  
+        <form action="/workouts/<%=workoutId%>/exercise/<%=currentExercise.exercise_id%>" method="post">
+            <input type="hidden" name="_method" value="put"/>
+            <input type="hidden" name="junction_id" value="<%=junctionId%>"/>
+            <ul>
+                <li>
+                    <label for="">Name is not on list? Edit here</label>
+                <input type="text" name="name" value="<%=currentExercise.name%>"/>
+                <button>Update</button>
+                </li>
+            </ul>
 
-<form action="/workouts/<%=workoutId%>/exercise/<%=currentExercise.exercise_id%>" method="post">
-    <input type="hidden" name="_method" value="put"/>
-    <input type="hidden" name="junction_id" value="<%=junctionId%>"/>
-    <label for="name"> Exercise Name </label>
-    <select name="name" id="name">
-        <option value="">--Please choose an option--</option>
-        <% for (const exercise of exercises) { %>
-            <option value="<%=exercise.name%>"><%=exercise.name%></option>
-        <% } %>
-    </select>
-    <input type="submit" value="Submit">
-</form>
+        </form>
+
+    </section>
 
 
-<form action="/workouts/<%=workoutId%>/exercise/<%=currentExercise.exercise_id%>" method="post">
-    <input type="hidden" name="_method" value="put"/>
-    <input type="hidden" name="junction_id" value="<%=junctionId%>"/>
-    <label for="">Name is not on list? Edit here</label>
-    <input type="text" name="name" value="<%=currentExercise.name%>"/>
-    <button>edit</button>
-</form>
+</body>
