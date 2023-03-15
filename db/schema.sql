@@ -60,3 +60,7 @@ SELECT * FROM workout_exercise_junction JOIN workouts ON workout_exercise_juncti
 SELECT * FROM log_workout_entries JOIN workout_exercise_junction ON log_workout_entries.junction_id = workout_exercise_junction.junction_id JOIN exercises ON workout_exercise_junction.exercise_id = exercises.exercise_id WHERE log_id = 1;
 
 SELECT * FROM workout_exercise_junction JOIN exercises ON workout_exercise_junction.exercise_id = exercises.exercise_id WHERE workout_id = 2;
+
+SELECT * FROM exercises JOIN workout_exercise_junction ON exercises.exercise_id = workout_exercise_junction.exercise_id WHERE name = 'BARBELL ROW';
+
+SELECT * FROM exercises WHERE name = 'BARBELL ROW';
