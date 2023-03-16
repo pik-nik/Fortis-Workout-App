@@ -1,0 +1,22 @@
+<head>
+    <link rel="stylesheet" href="/css/form.css">
+</head>
+<body>
+    <section class="form_container">
+        <h2>Edit profile photo for <%= user.username%></h2>
+        <form action="/users/<%=user.user_id%>/photo?_method=PUT" method="post" enctype="multipart/form-data">
+            <!-- <input type="hidden" name="_method" value="PUT"/> -->
+            <ul>
+                <li>
+                    <img class="edit_profile_photo" src="<%=user.profile_photo%>" alt="">
+                    <input type="file" name="uploadedFile"/>
+                    <span>Update profile picture</span>
+                </li>
+                <li>
+                    <input type="submit" value ="Send">
+                </li>
+            </ul>
+        </form>
+
+</section>
+</body>

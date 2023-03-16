@@ -10,27 +10,31 @@ const users = [
       full_name: "Nikki Pham",
       email: "piknik@gmail.co",
       plainTextPassword: "pudding",
+      profile_photo: "https://res.cloudinary.com/dw1uh23cc/image/upload/v1678926725/cloudinary-tutorial/yjz0iwbgixxkyfnlm5yo.jpg"
     },
     {
       username: "jlo",
       full_name: "John Lopez",
       email: "jlo@gmail.co",
       plainTextPassword: "pudding",
+      profile_photo: "https://images.pexels.com/photos/3289711/pexels-photo-3289711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
       username: "jane",
       full_name: "Jane Citizen",
       email: "jane@gmail.com",
       plainTextPassword: "pudding",
+      profile_photo: "https://www.pexels.com/photo/woman-holding-exercise-equipment-416809/"
     },
 ]
 
+const default_profile_picture_url = "https://www.personality-insights.com/wp-content/uploads/2017/12/default-profile-pic-e1513291410505.jpg"
 const saltRounds = 10;
 
 for (let i = 0; i < users.length; i++) {
     bcrypt.genSalt(saltRounds, (err, salt) => {
         bcrypt.hash(users[i].plainTextPassword, salt, (err, digestedPassword) => {
-            const sql = `INSERT INTO users (username, full_name, email, password_digest) VALUES ('${users[i].username}', '${users[i].full_name}', '${users[i].email}', '${digestedPassword}');`
+            const sql = `INSERT INTO users (username, full_name, email, password_digest, profile_photo) VALUES ('${users[i].username}', '${users[i].full_name}', '${users[i].email}', '${digestedPassword}', '${users[i].profile_photo}');`
             db.query(sql, (err, dbRes) => {
             })
         })

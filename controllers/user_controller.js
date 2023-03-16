@@ -2,16 +2,41 @@ const express = require("express")
 const router = express.Router()
 const db = require("./../db")
 const bcrypt = require("bcrypt");
+const upload = require("./../middlewares/upload")
 
 
 // get new user form 
 router.get("/users/new", (req, res) => {
-    const unableToSignUpString = "" //! make separate strings
     res.render("signup", { unableToSignUpString })
 })
+
+router.get("/users/:userid/edit/photo", (req, res) => {
+    const sql = "SELECT username, user_id, profile_photo FROM users where user_id = $1"
+    db.query(sql, [req.params.userid], (err, dbRes) => {
+        const user = dbRes.rows[0]
+        res.render("edit_user_photo", { user })
+    })
+})
+
+router.get("/users/:userid/edit", (req, res) => {
+    const sql = "SELECT username, full_name, email, user_id, profile_photo FROM users where user_id = $1"
+    db.query(sql, [req.params.userid], (err, dbRes) => {
+        const user = dbRes.rows[0]
+        res.render("edit_user", { user })
+    })
+})
+
 router.get("/users/:userid", (req, res) => {
-    const userId = req.params.userid
-    res.render("user_details")
+    const sql = "SELECT username, full_name, email, user_id, profile_photo FROM users where user_id = $1" 
+    db.query(sql, [req.params.userid], (err, dbRes) => {
+        const user = dbRes.rows[0]
+
+        const sql2 = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') FROM workouts where user_id = $1 ORDER BY workout_date DESC LIMIT 5"
+        db.query(sql2, [req.params.userid], (err, dbWorkoutRes) => {
+            const workouts = dbWorkoutRes.rows
+            res.render("user_details", { user, workouts })
+        })
+    })
 })
 
 // users list
@@ -24,7 +49,7 @@ router.post("/users", (req, res) => {
     const username = req.body.username
     const plainTextPassword = req.body.password
 
-    const sql1 = `SELECT * FROM users WHERE email = $1 OR username = $2;`
+    const sql1 = "SELECT * FROM users WHERE email = $1 OR username = $2;"
     db.query(sql1, [email, username], (err, selectRes) => {
         if (selectRes.rows.length > 0) {
             const existingUserList = selectRes.rows
@@ -32,6 +57,7 @@ router.post("/users", (req, res) => {
                 if (user.email === email) {
                     const unableToSignUpString = "An account already exists with this email, please log in or use a different email"
                     res.render("signup", { unableToSignUpString })
+                    // ! change to res.redirect, install flash ejs 
                     return 
                 }
                 
@@ -52,8 +78,9 @@ router.post("/users", (req, res) => {
         const saltRounds = 10;
         bcrypt.genSalt(saltRounds, (err, salt) => {
             bcrypt.hash(plainTextPassword, salt, (err, digestedPassword) => {
-                const sql2 = "INSERT INTO users (email, username, full_name, password_digest) VALUES ($1, $2, $3, $4) RETURNING user_id;" //! insert default profile pic later
-                db.query(sql2, [email, username, req.body.full_name, digestedPassword], (err, insertRes) => {
+                const default_profile_picture_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png?20220226140232"
+                const sql2 = "INSERT INTO users (email, username, full_name, password_digest, profile_photo) VALUES ($1, $2, $3, $4, $5) RETURNING user_id;" 
+                db.query(sql2, [email, username, req.body.full_name, digestedPassword, default_profile_picture_url], (err, insertRes) => {
                     req.session.userId = insertRes.rows[0].user_id
                     res.redirect("/")
                 })
@@ -62,18 +89,46 @@ router.post("/users", (req, res) => {
     })
 }) 
 
-// // get existing user form 
-// router.get("/users/:id/edit", (req, res) => {
-//     const sql = "SELECT * FROM users where id = $1"
-//     db.query(sql, [req.params.id], (err, dbRes) => {
-//         const userDetails = dbRes.rows[0]
-//         res.render("edit_user", {user: userDetails})
-//     })
-// }) 
+router.put("/users/:userid/photo", upload.single("uploadedFile"), (req, res) => {
+    const sql = `UPDATE users SET profile_photo = $1 where user_id = $2`
+    db.query(sql, [req.file.path, req.params.userid], (err, dbRes) => {
+        res.redirect(`/users/${req.params.userid}`)
+    })
+})
 
-//  // update single user 
-// router.put("/users/:id", (req, res) => {
-//     res.send("in progress")
+ // update single user 
+// router.put("/users/:userid", (req, res) => {
+    // const sql = `UPDATE users SET full_name = $1 where user_id = $2`
+    // db.query(sql, [req.body.full_name, req.params.userid], (err, dbRes) => {
+    //     res.redirect(`/users/${req.params.userid}`)
+    // })
+    // const sql1 = "SELECT * FROM users WHERE email = $1 OR username = $2;"
+    // db.query(sql1, [email, username], (err, selectRes) => {
+    //     if (selectRes.rows.length > 0) {
+    //         const existingUserList = selectRes.rows
+    //         res.redirect("/users/${req.params.userid}/edit")
+    //         return
+    //         for (const existingUser of existingUserList) {
+    //             if ((existingUser.email === email) && (existingUser.user_id !== req.params.userid)) {
+    //                 const unableToEditString = "An account already exists with this email, please put a different email"
+    //                 console.log("does this work?");
+    //                 const sql2 = "SELECT username, full_name, email, user_id, profile_photo FROM users where user_id = $1"
+    //                 db.query(sql2, [req.params.userid], (err, dbCurrentUserRes) => {
+    //                     const user = dbCurrentUserRes.rows[0]
+    //                     console.log(user);
+    //                     res.render("edit_user", { unableToEditString, user })
+    //                     return 
+    //                 })
+    //             }
+            //     if (existingUser.username === username && existingUser.user_Id !== req.params.id) {
+            //         const unableToEditString = "Username is already taken, please pick another one"
+            //         res.render("edit_user", { unableToEditString })
+            //         return 
+            //     }
+            // }
+        // } 
+    // })
+    
 // })
 
 // make function to ensure logged in as user 

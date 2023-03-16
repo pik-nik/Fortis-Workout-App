@@ -94,3 +94,12 @@ input[type=button], input[type=submit], input[type=reset] {
     width: fit-content;
     height: fit-content;
 }
+
+.edit_profile_photo {
+    max-width: 30%;
+    margin: 0 auto;
+}
+
+input[type=file] {
+    margin: 10px auto;
+}

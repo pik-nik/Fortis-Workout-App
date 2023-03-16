@@ -4,9 +4,9 @@
 <body>
     <section class="form_container">
         <h2>Edit set for <%= log.name%></h2>
-        <form action="/workouts/<%=log.workout_id%>/exercise/<%=log.exercise_id%>/log/<%=log.log_id%>" method="post">
+        <form action="/workouts/<%=log.workout_id%>/exercise/<%=log.exercise_id%>/log/<%=log.log_id%>?_method=PUT" method="post">
             <input type="hidden" name="junction_id" value = "<%=log.junction_id%>"/> 
-            <input type="hidden" name="_method" value="put"/>
+            <!-- <input type="hidden" name="_method" value="PUT"/> -->
             <ul>
                 <li>
                     <label for="">Sets</label>

@@ -8,7 +8,8 @@ let lastUpload = ""
 
 const setCurrentUser = require("./middlewares/setCurrentUser")
 const viewHelpers = require("./middlewares/view_helpers")
-const methodOverride = require("./middlewares/method_override")
+// const methodOverride = require("./middlewares/method_override")
+const methodOverride = require("method-override")
 const upload = require("./middlewares/upload")
 
 const workoutController = require("./controllers/workout_controller")
@@ -19,7 +20,8 @@ app.set("view engine", "ejs")
 
 app.use(express.static("public"))
 app.use(express.urlencoded({ extended: true }))
-app.use(methodOverride)
+app.use(methodOverride("_method"))
+// app.use(methodOverride)
 app.use(expressLayouts)
 app.use(
     session({

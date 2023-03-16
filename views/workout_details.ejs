@@ -7,9 +7,9 @@
         <h3><%= workout.name %></h3>
         <p><%= workout.to_char %></p>
         <button><a href="/workouts/<%=workout.workout_id%>/edit">edit workout name/date</a></button>
-        <form action="/workouts/<%=workout.workout_id%>" method="post">
-            <input type="hidden" name="_method" value="delete" />
-            <!-- <input type="hidden" name="workout_id" value = "<%=workout.workout_id%>"/>  -->
+        <form action="/workouts/<%=workout.workout_id%>?_method=DELETE" method="post">
+            <!-- <input type="hidden" name="_method" value="delete" /> -->
+            <!-- <input type="hidden" name="workout_id" value = "%=workout.workout_id%>"/>  -->
             <button>delete workout</button>
         </form>
     </section>
@@ -20,8 +20,8 @@
             <div class="exercise_log">
                 <p><%=exercise.name%></p>
                 <button><a href="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/edit">edit exercise name</a></button>
-                <form action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>" method="post">
-                    <input type="hidden" name="_method" value="delete" />
+                <form action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>?_method=DELETE" method="post">
+                    <!-- <input type="hidden" name="_method" value="delete" /> -->
                     <button>delete exercise</button>
                 </form>
                     <% for (const logdata of logdatas){ %>
@@ -31,8 +31,8 @@
                                 <li>reps:<%= logdata.reps%> </li>
                                 <li>weight: <%= logdata.weight%></li>
                                 <li><button><a href="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/log/<%=logdata.log_id%>/edit">edit this set</a></button></li>
-                                <li><form action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/log/<%=logdata.log_id%>" method="post">
-                                    <input type="hidden" name="_method" value="delete" />
+                                <li><form action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/log/<%=logdata.log_id%>?_method=DELETE" method="post">
+                                    <!-- <input type="hidden" name="_method" value="delete" /> -->
                                     <button>delete this set</button>
                                 </form></li>
                             </ul>

@@ -4,8 +4,8 @@
 <body>
     <section  class="form_container">
         <h2>Edit exercise name</h2>
-        <form action="/workouts/<%=workoutId%>/exercise/<%=currentExercise.exercise_id%>" method="post">
-            <input type="hidden" name="_method" value="put"/>
+        <form action="/workouts/<%=workoutId%>/exercise/<%=currentExercise.exercise_id%>?_method=PUT" method="post">
+            <!-- <input type="hidden" name="_method" value="put"/> -->
             <input type="hidden" name="junction_id" value="<%=junctionId%>"/>
             <ul>
                 <li>
