@@ -165,44 +165,57 @@ router.post("/workouts",  (req, res) => {
 })
 
 router.put("/workouts/:workoutid/exercise/:exerciseid/log/:logid", (req, res) => {
-    const sql = "UPDATE log_workout_entries SET sets = $1, reps = $2, weight =$3 WHERE log_id = $4;"
-    db.query(sql, [req.body.sets, req.body.reps, req.body.weight, req.params.logid], (err, dbRes) => {
-        res.redirect(`/workouts/${req.params.workoutid}`)
-    })
+    if (!req.body.sets || !req.body.reps || !req.body.weight) {
+        res.redirect(`/workouts/${req.params.workoutid}/exercise/${req.params.exerciseid}/log/${req.params.logid}/edit`)
+    } else {
+        const sql = "UPDATE log_workout_entries SET sets = $1, reps = $2, weight =$3 WHERE log_id = $4;"
+        db.query(sql, [req.body.sets, req.body.reps, req.body.weight, req.params.logid], (err, dbRes) => {
+            res.redirect(`/workouts/${req.params.workoutid}`)
+        })
+    }
 })
 
 router.put("/workouts/:workoutid/exercise/:exerciseid", (req, res) => {
-    const newName = req.body.name
-    const sql1 = "SELECT * FROM exercises WHERE name = $1"
-    console.log(req.body.junction_id);
-    db.query (sql1, [newName.toUpperCase()], (err, dbSelectExerciseRes) => {
-        if (dbSelectExerciseRes.rows.length !== 0) {
-            const newExerciseId = dbSelectExerciseRes.rows[0].exercise_id
-            // console.log("NEW EXERCISE ID",newExerciseId);
-            console.log("exercise alreeady in db");
-            const sql2 = "UPDATE workout_exercise_junction SET exercise_id = $1 WHERE junction_id = $2;"
-            db.query (sql2, [newExerciseId, req.body.junction_id], (err, dbUpdateRes) => {
-                res.redirect(`/workouts/${req.params.workoutid}`)
-            })
-        } else { // add new name to exercise list then update junction 
-            const sql2 = "INSERT INTO exercises (name) VALUES ($1) returning exercise_id;"
-            db.query(sql2, [newName.toUpperCase()], (err, dbInsertExerciseRes) => {
-                const newExerciseId = dbInsertExerciseRes.rows[0].exercise_id
-                const sql3 = "UPDATE workout_exercise_junction SET exercise_id = $1 WHERE junction_id = $2;"
-                console.log("this is a new exercise");
-                db.query(sql3, [newExerciseId, req.body.junction_id], (err, dbUpdateRes) => {
+    if (!req.body.name) {
+        res.redirect(`/workouts/${req.params.workoutid}/exercise/${req.params.exerciseid}/edit`)
+    } else {
+        const newName = req.body.name
+        const sql1 = "SELECT * FROM exercises WHERE name = $1"
+        console.log(req.body.junction_id);
+        db.query (sql1, [newName.toUpperCase()], (err, dbSelectExerciseRes) => {
+            if (dbSelectExerciseRes.rows.length !== 0) {
+                const newExerciseId = dbSelectExerciseRes.rows[0].exercise_id
+                // console.log("NEW EXERCISE ID",newExerciseId);
+                console.log("exercise alreeady in db");
+                const sql2 = "UPDATE workout_exercise_junction SET exercise_id = $1 WHERE junction_id = $2;"
+                db.query (sql2, [newExerciseId, req.body.junction_id], (err, dbUpdateRes) => {
                     res.redirect(`/workouts/${req.params.workoutid}`)
                 })
-            })
-        }
-    })
+            } else { // add new name to exercise list then update junction 
+                const sql2 = "INSERT INTO exercises (name) VALUES ($1) returning exercise_id;"
+                db.query(sql2, [newName.toUpperCase()], (err, dbInsertExerciseRes) => {
+                    const newExerciseId = dbInsertExerciseRes.rows[0].exercise_id
+                    const sql3 = "UPDATE workout_exercise_junction SET exercise_id = $1 WHERE junction_id = $2;"
+                    console.log("this is a new exercise");
+                    db.query(sql3, [newExerciseId, req.body.junction_id], (err, dbUpdateRes) => {
+                        res.redirect(`/workouts/${req.params.workoutid}`)
+                    })
+                })
+            }
+        })
+    }
 })
 
 router.put("/workouts/:id", (req, res) => {
-    const sql = "UPDATE workouts SET name = $1, workout_date = $2 WHERE workout_id = $3;"
-    db.query(sql, [req.body.name, req.body.date, req.params.id], (err, dbRes) => {
-        res.redirect(`/workouts/${req.params.id}`)
-    })
+    if (!req.body.name || !req.body.workout_date) {
+        res.redirect(`/workouts/${req.params.id}/edit`)
+        return
+    } else {
+        const sql = "UPDATE workouts SET name = $1, workout_date = $2 WHERE workout_id = $3;"
+        db.query(sql, [req.body.name, req.body.date, req.params.id], (err, dbRes) => {
+            res.redirect(`/workouts/${req.params.id}`)
+        })
+    }
 })
 
 router.delete("/workouts/:workoutid/exercise/:exerciseid/log/:logid", (req, res) => {
@@ -225,7 +238,5 @@ router.delete("/workouts/:id", (req, res) => {
         res.redirect('/workouts')
     })
 })
-
-
 
 module.exports = router
