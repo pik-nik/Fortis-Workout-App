@@ -25,7 +25,7 @@
                 </div>
                 <ul>
                     <li><a href="/workouts"><p class="explore">Explore Workouts</p></a></li>
-                    <li><a href="/users"><p class="explore">Find Atheletes</p></a></li>
+                    <li><a href="/users"><p class="explore">Find Athletes</p></a></li>
                     <li><a href="/users/workouts"><p class="workouts">My Workouts</p></a></li>
                     <% if(isLoggedIn()) { %>
                         <li>
@@ -37,7 +37,7 @@
                             <button> <a href="/users/<%=currentUser.user_id%>/edit">settings</a> </button>
                         </li>
                     <% } else { %>
-                        <a href="/login"><li class="sign_in">Sign In</li></a>  
+                        <li><a href="/login"><p class="sign_in">Sign In </p></a></li>
                     <% } %>
                     
                 </ul>
