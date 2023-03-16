@@ -34,17 +34,16 @@ CREATE TABLE log_workout_entries (
 
 -- node seed_dummy_exercises;
 
--- CREATE TABLE workout_exercise_junction2 (
---     junction_id SERIAL PRIMARY KEY, 
---     exercise_id INT REFERENCES exercises(exercise_id),
---     workout_id INT REFERENCES workouts(workout_id) 
--- );
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY, 
+    username TEXT,
+    full_name TEXT,
+    email TEXT, 
+    password_digest TEXT
+);
 
+-- node seed_dummy_users;
 
--- CREATE TABLE user (
---     userID SERIAL PRIMARY KEY, 
---     username TEXT, 
--- );
 
 SELECT * FROM workout_exercise_junction WHERE workout_id = 1;
 

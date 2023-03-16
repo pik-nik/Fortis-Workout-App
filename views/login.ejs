@@ -1,0 +1,28 @@
+<head>
+    <link rel="stylesheet" href="/css/form.css">
+</head>
+<body>
+    <section class="form_container">
+        <h2>Login</h2>
+        <form action="/sessions" method="post">
+            <p> <%= unsuccessfulString %> </p>
+            <ul>
+                <li>
+                    <label for="">Email</label>
+                    <input type="text" name="email">
+                    <span>Enter your email</span>
+                </li>
+                <li>
+                    <label for="">Password</label>
+                    <input type="password" name="password">
+                    <span>Enter your password</span>
+                </li>
+                <li>
+                    <button>Login</button>
+                </li>
+            </ul>
+        </form>
+        <p> <a href="/users/new">Not a member yet? Sign up here</a> </p>
+    </section>
+
+</body>

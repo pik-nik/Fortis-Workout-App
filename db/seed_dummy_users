@@ -1,0 +1,38 @@
+const { Client } = require("pg") // need to save to database 
+  
+const bcrypt = require('bcrypt');
+
+const db = require("./../db")
+
+const users = [
+    {
+      username: "piknik",
+      full_name: "Nikki Pham",
+      email: "piknik@gmail.co",
+      plainTextPassword: "pudding",
+    },
+    {
+      username: "jlo",
+      full_name: "John Lopez",
+      email: "jlo@gmail.co",
+      plainTextPassword: "pudding",
+    },
+    {
+      username: "jane",
+      full_name: "Jane Citizen",
+      email: "jane@gmail.com",
+      plainTextPassword: "pudding",
+    },
+]
+
+const saltRounds = 10;
+
+for (let i = 0; i < users.length; i++) {
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+        bcrypt.hash(users[i].plainTextPassword, salt, (err, digestedPassword) => {
+            const sql = `INSERT INTO users (username, full_name, email, password_digest) VALUES ('${users[i].username}', '${users[i].full_name}', '${users[i].email}', '${digestedPassword}');`
+            db.query(sql, (err, dbRes) => {
+            })
+        })
+    })
+}
