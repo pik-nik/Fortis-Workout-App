@@ -4,7 +4,9 @@
 <body>
     <section class="form_container">
         <h2>Login</h2>
-        <p> <%= unsuccessfulString %> </p>
+        <% if (message) { %>
+            <p><%= message %></p>
+            <% } %>
         <form action="/sessions" method="post">
             <ul>
                 <li>

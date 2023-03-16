@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
 
 router.get("/login", (req, res) => {
     const unsuccessfulString = ""
-    res.render("login", { unsuccessfulString })
+    res.render("login", { message: req.flash('info') })
 }) 
 
 router.post("/sessions", (req, res) => {
@@ -20,8 +20,8 @@ router.post("/sessions", (req, res) => {
         const sql = `SELECT * FROM users WHERE email = '${email}'`
         db.query(sql, (err, dbRes) => {
             if (dbRes.rows.length === 0) { // if no user exists
-                const unsuccessfulString = "Account does not exist with this email"
-                res.render("login", { unsuccessfulString })
+                req.flash("info", "Account does not exist with this email")
+                res.redirect("/login")
                 return 
             }
             const user = dbRes.rows[0]
@@ -32,8 +32,8 @@ router.post("/sessions", (req, res) => {
                     console.log(req.session);
                     res.redirect(`/users/${user.user_id}`)
                 } else {
-                    const unsuccessfulString = "Incorrect password, please try again"
-                    res.render("login", { unsuccessfulString })
+                    req.flash("info", "Incorrect password, please try again")
+                    res.redirect("/login")
                 }
             });
         })

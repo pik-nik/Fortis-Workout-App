@@ -50,10 +50,12 @@ p {
 
 .already_member a {
     color: #fff;
+    font-size: 20px;
 }
 
 .already_member span {
     color: #9500ff;
+    font-family: 'Bebas Neue', cursive;
 }
 
 #features ul {
