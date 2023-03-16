@@ -37,18 +37,18 @@
                         </form>
                     </li>
                     
-                    <!-- % if(isLoggedIn()) { %> -->
-                        <!-- <li> -->
-                            <!-- <p>logged in as %=currentUser.email%> </p>      -->
-                            <!-- <form action="/sessions" method="post"> -->
-                                <!-- <input type="hidden" name="_method" value="delete"/> -->
-                                <!-- <button>logout</button> -->
-                            <!-- </form> -->
-                            <!-- <button> <a href="/users/%=currentUser.id%>/edit">settings</a> </button> -->
-                        <!-- </li> -->
-                    <!-- % } else { %> -->
+                    <% if(isLoggedIn()) { %>
+                        <li>
+                            <p><a href="/users/<%=currentUser.user_id%>"><%=currentUser.username%></a></p>     
+                            <form action="/sessions" method="post">
+                                <input type="hidden" name="_method" value="delete"/>
+                                <button>logout</button>
+                            </form>
+                            <button> <a href="/users/<%=currentUser.user_id%>/edit">settings</a> </button>
+                        </li>
+                    <% } else { %>
                         <a href="/login"><li class="sign_in">Sign In</li></a>  
-                    <!-- % } %> -->
+                    <% } %>
                     
                 </ul>
                 

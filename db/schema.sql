@@ -65,3 +65,5 @@ SELECT * FROM workout_exercise_junction JOIN exercises ON workout_exercise_junct
 SELECT * FROM exercises JOIN workout_exercise_junction ON exercises.exercise_id = workout_exercise_junction.exercise_id WHERE name = 'BARBELL ROW';
 
 SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') from workouts;
+
+insert into users (email, username, full_name, password_digest) VALUES ('dt', 'dt', 'dt', 'dt');
