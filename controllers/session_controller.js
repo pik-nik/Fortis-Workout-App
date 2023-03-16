@@ -10,28 +10,30 @@ router.get("/login", (req, res) => {
 
 router.post("/sessions", (req, res) => {
     const { email, password } = req.body 
-    const sql = `SELECT * FROM users WHERE email = '${email}'`
-
-    db.query(sql, (err, dbRes) => {
-        if (dbRes.rows.length === 0) { // if no user exists
-            const unsuccessfulString = "Account does not exist with this email"
-            res.render("login", { unsuccessfulString })
-            return 
-        }
-
-        const user = dbRes.rows[0]
-        console.log(user);
-        bcrypt.compare(password, user.password_digest, (err, result) => {
-            if (result) { 
-                req.session.userId = user.user_id
-                console.log(req.session);
-                res.redirect("/")
-            } else {
-                const unsuccessfulString = "Incorrect password, please try again"
+    if (!email || !password) {  
+        res.redirect("/login")
+    } else {
+        const sql = `SELECT * FROM users WHERE email = '${email}'`
+        db.query(sql, (err, dbRes) => {
+            if (dbRes.rows.length === 0) { // if no user exists
+                const unsuccessfulString = "Account does not exist with this email"
                 res.render("login", { unsuccessfulString })
+                return 
             }
-        });
-    })
+            const user = dbRes.rows[0]
+            console.log(user);
+            bcrypt.compare(password, user.password_digest, (err, result) => {
+                if (result) { 
+                    req.session.userId = user.user_id
+                    console.log(req.session);
+                    res.redirect("/")
+                } else {
+                    const unsuccessfulString = "Incorrect password, please try again"
+                    res.render("login", { unsuccessfulString })
+                }
+            });
+        })
+    }
 })
 
 router.delete("/sessions", (req, res) => {
