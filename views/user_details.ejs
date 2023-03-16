@@ -2,10 +2,11 @@
 <h3><%=user.full_name%></h3>
 <img src="<%=user.profile_photo%>" alt="">
 
-<section>
+<% if (Number(userIdLoggedIn) === user.user_id) { %>
+    <section>
     <button> <a href="/users/<%=user.user_id%>/edit">edit profile</a> </button>
-</section>
-
+    </section>
+<% } %>
 
 <section>
     <h4>Latest Workouts</h4>

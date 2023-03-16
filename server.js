@@ -38,7 +38,7 @@ app.use(
 app.use(setCurrentUser) 
 app.use(viewHelpers)
 
-app.use("/workouts", ensureLoggedIn ,workoutController)
+app.use(workoutController)
 app.use(userController)
 app.use(sessionController)
 

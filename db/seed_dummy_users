@@ -8,14 +8,14 @@ const users = [
     {
       username: "piknik",
       full_name: "Nikki Pham",
-      email: "piknik@gmail.co",
+      email: "piknik@gmail.com",
       plainTextPassword: "pudding",
       profile_photo: "https://res.cloudinary.com/dw1uh23cc/image/upload/v1678926725/cloudinary-tutorial/yjz0iwbgixxkyfnlm5yo.jpg"
     },
     {
       username: "jlo",
       full_name: "John Lopez",
-      email: "jlo@gmail.co",
+      email: "jlo@gmail.com",
       plainTextPassword: "pudding",
       profile_photo: "https://images.pexels.com/photos/3289711/pexels-photo-3289711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },

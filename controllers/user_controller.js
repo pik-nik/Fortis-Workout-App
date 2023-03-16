@@ -29,18 +29,23 @@ router.get("/users/:userid/password/edit",  ensureLoggedIn, (req, res) => {
 })
 
 router.get("/users/:userid/edit",  ensureLoggedIn, (req, res) => {
-    const sql = "SELECT username, full_name, email, user_id, profile_photo FROM users where user_id = $1"
-    db.query(sql, [req.params.userid], (err, dbRes) => {
-        const user = dbRes.rows[0]
-        res.render("edit_user", { user })
-    })
+    if (Number(req.params.userid) !== req.session.userId) {
+        res.redirect(`/users/`)
+    } else {        
+        const sql = "SELECT username, full_name, email, user_id, profile_photo FROM users where user_id = $1"
+        db.query(sql, [req.params.userid], (err, dbRes) => {
+            const user = dbRes.rows[0]
+            res.render("edit_user", { user })
+        })
+    }
+
 })
 
 router.get("/users/workouts", ensureLoggedIn, (req, res) => {
     // if (!req.session.userId) {
     //     res.redirect("/login")
     // } else {
-        res.redirect(`/users/${!req.session.userId}/workouts`)
+        res.redirect(`/users/${req.session.userId}/workouts`)
     // } //! check to make sure no crashes before deleting
 })
 
@@ -69,11 +74,12 @@ router.get("/users/:userid",  ensureLoggedIn, (req, res) => {
     const sql = "SELECT username, full_name, email, user_id, profile_photo FROM users where user_id = $1" 
     db.query(sql, [req.params.userid], (err, dbRes) => {
         const user = dbRes.rows[0]
+        const userIdLoggedIn = req.session.userId
 
         const sql2 = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') FROM workouts where user_id = $1 ORDER BY workout_date DESC LIMIT 5"
         db.query(sql2, [req.params.userid], (err, dbWorkoutRes) => {
             const workouts = dbWorkoutRes.rows
-            res.render("user_details", { user, workouts })
+            res.render("user_details", { user, workouts, userIdLoggedIn })
         })
     })
 })
