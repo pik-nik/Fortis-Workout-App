@@ -1,13 +1,14 @@
 const express = require("express")
 const router = express.Router()
 const db = require("./../db")
+const ensureLoggedIn = require("./../middlewares/ensure_logged_in")
 
 //add new workout
-router.get("/workouts/new", (req, res) => {
+router.get("/workouts/new", ensureLoggedIn, (req, res) => {
     res.render("new_workout")
 })
 //add new exercise
-router.get("/workouts/:id/exercise/new", (req, res) => {
+router.get("/workouts/:id/exercise/new", ensureLoggedIn, (req, res) => {
     const workoutId = req.params.id
     
     const sql = "SELECT * FROM exercises ORDER BY name ASC;"
@@ -15,10 +16,9 @@ router.get("/workouts/:id/exercise/new", (req, res) => {
         const exercises = dbRes.rows
         res.render("new_exercise", { workoutId, exercises })
     })
-    
 })
 // edit log entry 
-router.get("/workouts/:workoutid/exercise/:exerciseid/log/:logid/edit", (req, res) => {
+router.get("/workouts/:workoutid/exercise/:exerciseid/log/:logid/edit", ensureLoggedIn, (req, res) => {
     const sql = "SELECT * FROM log_workout_entries JOIN workout_exercise_junction ON log_workout_entries.junction_id = workout_exercise_junction.junction_id JOIN exercises ON workout_exercise_junction.exercise_id = exercises.exercise_id WHERE log_id = $1;"
     
     db.query(sql, [req.params.logid], (err, dbRes) => {
@@ -27,7 +27,7 @@ router.get("/workouts/:workoutid/exercise/:exerciseid/log/:logid/edit", (req, re
     })
 })
 // edit exercise name 
-router.get("/workouts/:workoutid/exercise/:exerciseid/edit", (req, res) => {
+router.get("/workouts/:workoutid/exercise/:exerciseid/edit", ensureLoggedIn, (req, res) => {
     const workoutId = req.params.workoutid
     const exerciseId = req.params.exerciseid
     const sql1 = "SELECT * FROM exercises WHERE exercise_id = $1"
@@ -46,7 +46,7 @@ router.get("/workouts/:workoutid/exercise/:exerciseid/edit", (req, res) => {
     })
 }) 
 //display exercise in workout
-router.get("/workouts/:workoutid/exercise/:exerciseid", (req, res) => {
+router.get("/workouts/:workoutid/exercise/:exerciseid", ensureLoggedIn, (req, res) => {
     const sql = "SELECT * FROM exercises where exercise_id = $1"
     const workoutId = req.params.workoutid
     const exerciseId = req.params.exerciseid
@@ -60,7 +60,7 @@ router.get("/workouts/:workoutid/exercise/:exerciseid", (req, res) => {
     })
 })
 //display workout
-router.get("/workouts/:id", (req, res) => {
+router.get("/workouts/:id", ensureLoggedIn, (req, res) => {
     const sql = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') FROM workouts WHERE workout_id = $1;"
 
     db.query(sql, [req.params.id], (err, dbRes) => {
@@ -77,7 +77,7 @@ router.get("/workouts/:id", (req, res) => {
     })
 })
 // list of workouts
-router.get("/workouts", (req, res) => {
+router.get("/workouts", ensureLoggedIn, (req, res) => {
     const sql = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') FROM workouts JOIN users ON workouts.user_id = users.user_id ORDER BY workout_date DESC;"
 
     db.query(sql, (err, dbRes) => {
@@ -93,7 +93,7 @@ router.get("/workouts", (req, res) => {
     })
 })
 
-router.get("/workouts/:id/edit",  (req, res) => {
+router.get("/workouts/:id/edit", ensureLoggedIn, (req, res) => {
     const sql = "SELECT *, TO_CHAR(workout_date, 'yyyy-mm-dd') FROM workouts WHERE workout_id = $1"
     
     db.query(sql, [req.params.id], (err, dbRes) => {
