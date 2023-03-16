@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
-const bcrypt = require("bcrypt")
 const db = require("./../db")
+const bcrypt = require("bcrypt")
 
 router.get("/login", (req, res) => {
     const unsuccessfulString = ""
@@ -20,10 +20,11 @@ router.post("/sessions", (req, res) => {
         }
 
         const user = dbRes.rows[0]
+        console.log(user);
         bcrypt.compare(password, user.password_digest, (err, result) => {
             if (result) { 
-                req.session.userId = user.id
-
+                req.session.userId = user.user_id
+                console.log(req.session);
                 res.redirect("/")
             } else {
                 const unsuccessfulString = "Incorrect password, please try again"
@@ -31,13 +32,12 @@ router.post("/sessions", (req, res) => {
             }
         });
     })
-    // res.json(req.body)
 })
 
-// router.delete("/sessions", (req, res) => {
-//     req.session.destroy(() => {
-//         res.redirect("/login")
-//     })
-// })
+router.delete("/sessions", (req, res) => {
+    req.session.destroy(() => {
+        res.redirect("/login")
+    })
+})
 
 module.exports = router

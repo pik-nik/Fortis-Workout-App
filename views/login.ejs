@@ -4,8 +4,8 @@
 <body>
     <section class="form_container">
         <h2>Login</h2>
+        <p> <%= unsuccessfulString %> </p>
         <form action="/sessions" method="post">
-            <p> <%= unsuccessfulString %> </p>
             <ul>
                 <li>
                     <label for="">Email</label>
@@ -24,5 +24,4 @@
         </form>
         <p> <a href="/users/new">Not a member yet? Sign up here</a> </p>
     </section>
-
 </body>
