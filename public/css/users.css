@@ -1,0 +1,37 @@
+.users_grid {
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-gap: 10px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: #e2d4ea;
+    width: 90%;
+    box-shadow: 0 4px 8px gray;
+    border-radius: 10px;
+    overflow: hidden; 
+
+}
+
+.card img {
+    object-fit: cover;
+    width: 80%;
+    aspect-ratio: 1/1;
+}
+
+.card_content {
+    padding: 5px;
+    color: #000000;
+    font-size: 0.5em;
+}
+
+.card_content h3 {
+    color: #4B0082;
+    font-size: 2em;
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    display: block;
+}

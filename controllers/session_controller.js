@@ -3,6 +3,10 @@ const router = express.Router()
 const db = require("./../db")
 const bcrypt = require("bcrypt")
 
+router.get("/", (req, res) => {
+    res.render("home")
+})
+
 router.get("/login", (req, res) => {
     const unsuccessfulString = ""
     res.render("login", { unsuccessfulString })
@@ -26,7 +30,7 @@ router.post("/sessions", (req, res) => {
                 if (result) { 
                     req.session.userId = user.user_id
                     console.log(req.session);
-                    res.redirect("/")
+                    res.redirect(`/users/${user.user_id}`)
                 } else {
                     const unsuccessfulString = "Incorrect password, please try again"
                     res.render("login", { unsuccessfulString })

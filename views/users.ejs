@@ -1,1 +1,22 @@
-<h2>users</h2>
+<head>
+    <link rel="stylesheet" href="/css/users.css">
+</head>
+<body>
+    <h2>Find Atheletes</h2>
+
+    <div class="users_grid">
+        <% for (let user of users) { %>
+            <a href="/users/<%= user.user_id %>">
+            <div class="card">
+                <section>
+                    <img src="<%= user.profile_photo %>" alt="">
+                </section>
+                <section class="card_content">
+                    <h3><%= user.username %></h3>
+                    <p><%= user.full_name %></p>
+                </section>
+            </div>    
+        </a>
+        <% } %>
+    </div>
+</body>
