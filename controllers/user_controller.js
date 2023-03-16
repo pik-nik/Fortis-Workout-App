@@ -7,14 +7,22 @@ const upload = require("./../middlewares/upload")
 
 // get new user form 
 router.get("/users/new", (req, res) => {
-    res.render("signup", { unableToSignUpString })
+    res.render("new_user.ejs", { unableToSignUpString })
 })
 
-router.get("/users/:userid/edit/photo", (req, res) => {
+router.get("/users/:userid/photo/edit", (req, res) => {
     const sql = "SELECT username, user_id, profile_photo FROM users where user_id = $1"
     db.query(sql, [req.params.userid], (err, dbRes) => {
         const user = dbRes.rows[0]
         res.render("edit_user_photo", { user })
+    })
+})
+
+router.get("/users/:userid/password/edit", (req, res) => {
+    const sql = "SELECT username, user_id FROM users where user_id = $1"
+    db.query(sql, [req.params.userid], (err, dbRes) => {
+        const user = dbRes.rows[0]
+        res.render("edit_user_password", { user })
     })
 })
 
@@ -49,7 +57,7 @@ router.post("/users", (req, res) => {
     const username = req.body.username
     const plainTextPassword = req.body.password
 
-    const sql1 = "SELECT * FROM users WHERE email = $1 OR username = $2;"
+    const sql1 = "SELECT username, full_name, email, user_id, profile_photo FROM users WHERE email = $1 OR username = $2;"
     db.query(sql1, [email, username], (err, selectRes) => {
         if (selectRes.rows.length > 0) {
             const existingUserList = selectRes.rows
@@ -96,40 +104,61 @@ router.put("/users/:userid/photo", upload.single("uploadedFile"), (req, res) => 
     })
 })
 
- // update single user 
-// router.put("/users/:userid", (req, res) => {
-    // const sql = `UPDATE users SET full_name = $1 where user_id = $2`
-    // db.query(sql, [req.body.full_name, req.params.userid], (err, dbRes) => {
-    //     res.redirect(`/users/${req.params.userid}`)
-    // })
-    // const sql1 = "SELECT * FROM users WHERE email = $1 OR username = $2;"
-    // db.query(sql1, [email, username], (err, selectRes) => {
-    //     if (selectRes.rows.length > 0) {
-    //         const existingUserList = selectRes.rows
-    //         res.redirect("/users/${req.params.userid}/edit")
-    //         return
-    //         for (const existingUser of existingUserList) {
-    //             if ((existingUser.email === email) && (existingUser.user_id !== req.params.userid)) {
-    //                 const unableToEditString = "An account already exists with this email, please put a different email"
-    //                 console.log("does this work?");
-    //                 const sql2 = "SELECT username, full_name, email, user_id, profile_photo FROM users where user_id = $1"
-    //                 db.query(sql2, [req.params.userid], (err, dbCurrentUserRes) => {
-    //                     const user = dbCurrentUserRes.rows[0]
-    //                     console.log(user);
-    //                     res.render("edit_user", { unableToEditString, user })
-    //                     return 
-    //                 })
-    //             }
-            //     if (existingUser.username === username && existingUser.user_Id !== req.params.id) {
-            //         const unableToEditString = "Username is already taken, please pick another one"
-            //         res.render("edit_user", { unableToEditString })
-            //         return 
-            //     }
-            // }
-        // } 
-    // })
+router.put("/users/:userid/password", (req, res) => {
+    if (req.body.password !== req.body.password_confirmation) {
+        console.log("Passwords do not match, please try again") //! flash this message
+        res.redirect(`/users/${req.params.userid}/password/edit`)
+        return 
+    } 
+
+    const plainTextPassword = req.body.password
     
-// })
+    const saltRounds = 10;
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+            bcrypt.hash(plainTextPassword, salt, (err, digestedPassword) => {
+                const sql = `UPDATE users SET password_digest = $1 where user_id = $2`
+                
+                db.query(sql, [digestedPassword, req.params.userid], (err, dbRes) => {
+                    res.redirect(`/users/${req.params.userid}`)
+                })
+            })
+        })  
+})
+
+ // update single user 
+router.put("/users/:userid", (req, res) => {
+    const email = req.body.email
+    const username = req.body.username
+    
+    const sql1 = "SELECT username, full_name, email, user_id, profile_photo FROM users WHERE email = $1 OR username = $2;"
+    db.query(sql1, [email, username], (err, selectRes) => {
+        if (selectRes.rows.length > 0) {
+            const existingUserList = selectRes.rows
+            console.log("exisiting user list:",existingUserList );
+            console.log("user id", req.params.userid);
+            for (const existingUser of existingUserList) {
+                if ((existingUser.email === email) && (existingUser.user_id !== Number(req.params.userid))) {
+                    // const unableToEditString = "An account already exists with this email, please put a different email" //! flash this message 
+                    console.log("An account already exists with this email, please put a different email");
+                    res.redirect(`/users/${req.params.userid}/edit`)
+                    return //! when flashing maybe see if we can flash two messages
+                }
+                if (existingUser.username === username && existingUser.user_Id !== req.params.id) {
+                    //const unableToEditString = "Username is taken" //! flash this message
+                    console.log("Username is taken"); 
+                    res.redirect(`/users/${req.params.userid}/edit`)
+                    return
+                }
+            }
+        } 
+        const sql2 = "UPDATE users SET full_name = $1, email = $2, username = $3 where user_id = $4"
+        db.query(sql2, [req.body.full_name, email, username, req.params.userid], (err, UpdateRes) => {
+            res.redirect(`/users/${req.params.userid}`)
+        })
+    })
+})
+
+//! delete profile
 
 // make function to ensure logged in as user 
 

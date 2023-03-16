@@ -5,12 +5,11 @@
     <section class="form_container">
         <h2>Edit Profile for <%= user.username%></h2>
         <img class="edit_profile_photo" src="<%=user.profile_photo%>" alt="">
-        <p> <a href="/users/<%=user.user_id%>/edit/photo">Edit profile photo here</a></p>
-        <!-- <p>%= unableToEditString %></p> -->
-        <form action="/users/<%=user.user_id%>" method="post">
-            <input type="hidden" name="_method" value="put"/>
+        <p> <a href="/users/<%=user.user_id%>/photo/edit">Edit profile photo here</a></p>
+        <form action="/users/<%=user.user_id%>?_method=PUT" method="post">
+            <!-- <input type="hidden" name="_method" value="put"/> -->
             <ul>
-                <!-- <li>
+                <li>
                     <label for="email">Email</label>
                     <input type="text" name="email" value="<%=user.email%>"/>
                     <span>Update email</span>
@@ -19,7 +18,7 @@
                     <label for="username">Username</label>
                     <input type="text" name="username" value="<%=user.username%>"/>
                     <span>Change your username</span>
-                </li> -->
+                </li>
                 <li>
                     <label for="full_name">Name</label>
                     <input type="text" name="full_name" value="<%=user.full_name%>"/>
@@ -30,7 +29,7 @@
                 </li>
             </ul>
         </form>
-        <p> <a href="">Edit password here</a></p>
+        <p> <a href="/users/<%=user.user_id%>/password/edit">Edit password here</a></p>
         <button></button>
     </section>
 </body>
