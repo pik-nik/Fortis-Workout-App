@@ -4,7 +4,9 @@
 <body>
     <section class="form_container">
         <h2>Sign Up</h2>
-        <p> <%= unableToSignUpString %> </p>
+        <% if (message) { %>
+            <p><%= message %></p>
+            <% } %>
         <form action="/users" method="post">
             <ul>
                 <li>

@@ -5,11 +5,8 @@ const bcrypt = require("bcrypt");
 const upload = require("./../middlewares/upload")
 const ensureLoggedIn = require("./../middlewares/ensure_logged_in")
 
-
-// get new user form 
 router.get("/users/new", (req, res) => {
-    const unableToSignUpString = ""
-    res.render("new_user.ejs", { unableToSignUpString })
+    res.render("new_user.ejs", { message: req.flash('info') })
 })
 
 router.get("/users/:userid/photo/edit", ensureLoggedIn, (req, res) => {
@@ -24,7 +21,7 @@ router.get("/users/:userid/password/edit",  ensureLoggedIn, (req, res) => {
     const sql = "SELECT username, user_id FROM users where user_id = $1"
     db.query(sql, [req.params.userid], (err, dbRes) => {
         const user = dbRes.rows[0]
-        res.render("edit_user_password", { user })
+        res.render("edit_user_password", { user, message: req.flash('info')})
     })
 })
 
@@ -35,39 +32,28 @@ router.get("/users/:userid/edit",  ensureLoggedIn, (req, res) => {
         const sql = "SELECT username, full_name, email, user_id, profile_photo FROM users where user_id = $1"
         db.query(sql, [req.params.userid], (err, dbRes) => {
             const user = dbRes.rows[0]
-            res.render("edit_user", { user })
+            res.render("edit_user", { user, message: req.flash('info')})
         })
     }
-
 })
 
 router.get("/users/workouts", ensureLoggedIn, (req, res) => {
-    // if (!req.session.userId) {
-    //     res.redirect("/login")
-    // } else {
         res.redirect(`/users/${req.session.userId}/workouts`)
-    // } //! check to make sure no crashes before deleting
 })
 
 router.get("/users/:userid/workouts",  ensureLoggedIn, (req, res) => {
-    // if (!req.session.userId) {
-    //     res.redirect("/login")
-    // } else {
-            const sql = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') FROM workouts WHERE user_id = $1 ORDER BY workout_date DESC;"
-            console.log(req.session.userId, "session userId");
-
-        db.query(sql, [req.session.userId], (err, dbRes) => {
-            const workouts = dbRes.rows
-            console.log("workouts",workouts);
-
-            const sql2 = "SELECT * FROM workout_exercise_junction JOIN exercises ON workout_exercise_junction.exercise_id = exercises.exercise_id;"
-            db.query(sql2, (err, dbJunctionRes) => {
-                console.log("exercises in workouts",dbJunctionRes.rows);
-                const exercisesInWorkouts = dbJunctionRes.rows;
-                res.render("current_user_workouts", { workouts, exercisesInWorkouts })
-            })
+    const sql = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') FROM workouts WHERE user_id = $1 ORDER BY workout_date DESC;"
+    // console.log(req.session.userId, "session userId");
+    db.query(sql, [req.session.userId], (err, dbRes) => {
+        const workouts = dbRes.rows
+        // console.log("workouts",workouts);
+        const sql2 = "SELECT * FROM workout_exercise_junction JOIN exercises ON workout_exercise_junction.exercise_id = exercises.exercise_id;"
+        db.query(sql2, (err, dbJunctionRes) => {
+            // console.log("exercises in workouts",dbJunctionRes.rows);
+            const exercisesInWorkouts = dbJunctionRes.rows;
+            res.render("current_user_workouts", { workouts, exercisesInWorkouts })
         })
-    // }
+    })
 })
 
 router.get("/users/:userid",  ensureLoggedIn, (req, res) => {
@@ -75,7 +61,6 @@ router.get("/users/:userid",  ensureLoggedIn, (req, res) => {
     db.query(sql, [req.params.userid], (err, dbRes) => {
         const user = dbRes.rows[0]
         const userIdLoggedIn = req.session.userId
-
         const sql2 = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') FROM workouts where user_id = $1 ORDER BY workout_date DESC LIMIT 5"
         db.query(sql2, [req.params.userid], (err, dbWorkoutRes) => {
             const workouts = dbWorkoutRes.rows
@@ -84,7 +69,6 @@ router.get("/users/:userid",  ensureLoggedIn, (req, res) => {
     })
 })
 
-// users list
 router.get("/users",  ensureLoggedIn, (req, res) => {
     const sql = "SELECT username, full_name, email, user_id, profile_photo FROM users"
     db.query(sql, (err, dbRes) => {
@@ -92,7 +76,7 @@ router.get("/users",  ensureLoggedIn, (req, res) => {
         res.render("users", { users })
     })
 })
-// create user
+
 router.post("/users", (req, res) => {
     const email = req.body.email
     const username = req.body.username
@@ -107,21 +91,21 @@ router.post("/users", (req, res) => {
                 const existingUserList = selectRes.rows
                 for (const user of existingUserList) {
                     if (user.email === email) {
-                        const unableToSignUpString = "An account already exists with this email, please log in or use a different email"
-                        res.render("signup", { unableToSignUpString })
-                        // ! change to res.redirect, install flash ejs 
+                        req.flash("info", "An account already exists with this email, please log in or use a different email")
+                        res.redirect("/users/new")
                         return 
                     }
                     if (user.username === username) {
                         const unableToSignUpString = "Username is already taken, please pick another one"
-                        res.render("signup", { unableToSignUpString })
+                        req.flash("info", "Username is already taken, please pick another one")
+                        res.redirect("/users/new")
                         return 
                     }
                 }
             } 
             if (req.body.password !== req.body.password_confirmation) {
-                const unableToSignUpString = "Passwords do not match, please try again"
-                res.render("signup", { unableToSignUpString })
+                req.flash("info", "Passwords do not match, please try again")
+                res.redirect("/users/new")
                 return 
             } 
             const saltRounds = 10;
@@ -155,17 +139,15 @@ router.put("/users/:userid/password", (req, res) => {
         res.redirect(`/users/${req.params.userid}/password/edit`)
     } else {
         if (req.body.password !== req.body.password_confirmation) {
-            console.log("Passwords do not match, please try again") //! flash this message
+            req.flash("info", "Passwords do not match, please try again")
             res.redirect(`/users/${req.params.userid}/password/edit`)
             return 
         } 
-    
         const plainTextPassword = req.body.password
         const saltRounds = 10;
         bcrypt.genSalt(saltRounds, (err, salt) => {
             bcrypt.hash(plainTextPassword, salt, (err, digestedPassword) => {
                 const sql = `UPDATE users SET password_digest = $1 where user_id = $2`
-                
                 db.query(sql, [digestedPassword, req.params.userid], (err, dbRes) => {
                     res.redirect(`/users/${req.params.userid}`)
                 })
@@ -174,7 +156,6 @@ router.put("/users/:userid/password", (req, res) => {
     }
 })
 
- // update single user 
 router.put("/users/:userid", (req, res) => {
     const email = req.body.email
     const username = req.body.username
@@ -189,14 +170,12 @@ router.put("/users/:userid", (req, res) => {
                 console.log("user id", req.params.userid);
                 for (const existingUser of existingUserList) {
                     if ((existingUser.email === email) && (existingUser.user_id !== Number(req.params.userid))) {
-                        // const unableToEditString = "An account already exists with this email, please put a different email" //! flash this message 
-                        console.log("An account already exists with this email, please put a different email");
+                        req.flash("info", "An account already exists with this email, please put a different email")
                         res.redirect(`/users/${req.params.userid}/edit`)
-                        return //! when flashing maybe see if we can flash two messages
+                        return 
                     }
-                    if (existingUser.username === username && existingUser.user_Id !== req.params.id) {
-                        //const unableToEditString = "Username is taken" //! flash this message
-                        console.log("Username is taken"); 
+                    if (existingUser.username === username && existingUser.user_Id !== Number(req.params.id)) {
+                        req.flash("info", "Username is taken, please pick another one")
                         res.redirect(`/users/${req.params.userid}/edit`)
                         return
                     }
@@ -217,6 +196,5 @@ router.delete("/users/:id", (req, res) => {
         res.redirect('/login')
     }) 
 })
-// make function to ensure logged in as user 
 
 module.exports = router

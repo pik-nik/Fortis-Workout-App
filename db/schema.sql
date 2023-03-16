@@ -32,8 +32,6 @@ CREATE TABLE log_workout_entries (
     user_id integer
 );
 
-
-
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY, 
     username TEXT,

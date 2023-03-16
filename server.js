@@ -4,6 +4,7 @@ const port = process.env.PORT || 8080
 const expressLayouts = require("express-ejs-layouts")
 const session = require("express-session")
 const MemoryStore = require('memorystore')(session)
+const flash = require('express-flash')
 
 const setCurrentUser = require("./middlewares/setCurrentUser")
 const viewHelpers = require("./middlewares/view_helpers")
@@ -34,6 +35,7 @@ app.use(
       saveUninitialized: true,
     })
   )
+app.use(flash());
 
 app.use(setCurrentUser) 
 app.use(viewHelpers)
