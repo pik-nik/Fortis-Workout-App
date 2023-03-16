@@ -2,9 +2,6 @@ const express = require("express")
 const router = express.Router()
 const db = require("./../db")
 
-router.get("/", (req, res) => {
-    res.render("home")
-})
 //add new workout
 router.get("/workouts/new", (req, res) => {
     res.render("new_workout")
@@ -64,7 +61,7 @@ router.get("/workouts/:workoutid/exercise/:exerciseid", (req, res) => {
 })
 //display workout
 router.get("/workouts/:id", (req, res) => {
-    const sql = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') from workouts WHERE workout_id = $1;"
+    const sql = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') FROM workouts WHERE workout_id = $1;"
 
     db.query(sql, [req.params.id], (err, dbRes) => {
         const workout = dbRes.rows[0]
@@ -81,17 +78,17 @@ router.get("/workouts/:id", (req, res) => {
 })
 // list of workouts
 router.get("/workouts", (req, res) => {
-    const sql = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') FROM workouts ORDER BY workout_date DESC;"
+    const sql = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') FROM workouts JOIN users ON workouts.user_id = users.user_id ORDER BY workout_date DESC;"
 
     db.query(sql, (err, dbRes) => {
         const workouts = dbRes.rows
-        console.log("workouts",workouts);
+        console.log(workouts);
 
         const sql2 = "SELECT * FROM workout_exercise_junction JOIN exercises ON workout_exercise_junction.exercise_id = exercises.exercise_id;"
         db.query(sql2, (err, dbJunctionRes) => {
             console.log("exercises in workouts",dbJunctionRes.rows);
             const exercisesInWorkouts = dbJunctionRes.rows;
-            res.render("workouts", { workouts, exercisesInWorkouts })
+            res.render("explore_workouts", { workouts, exercisesInWorkouts })
         })
     })
 })

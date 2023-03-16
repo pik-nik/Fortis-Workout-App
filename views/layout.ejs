@@ -24,19 +24,9 @@
                     </a>
                 </div>
                 <ul>
-                    <li><a href=""><p class="explore">Explore Worko</p></a></li>
-    
-                    <li><a href="/workouts"><p class="workouts">My Workouts</p></a></li>
-                    
-                    <!-- <li>
-                        <form action="">
-                            <div class="searchbox_text">
-                                <input type="text" placeholder="search"/>
-                            </div>
-                            <input type="button" value="search">
-                        </form>
-                    </li> -->
-                    
+                    <li><a href="/workouts"><p class="explore">Explore Workouts</p></a></li>
+                    <li><a href="/users"><p class="explore">Find Atheletes</p></a></li>
+                    <li><a href="/users/workouts"><p class="workouts">My Workouts</p></a></li>
                     <% if(isLoggedIn()) { %>
                         <li>
                             <p><a href="/users/<%=currentUser.user_id%>"><%=currentUser.username%></a></p>     

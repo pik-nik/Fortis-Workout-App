@@ -1,0 +1,80 @@
+* {
+    /* border: 1px solid red; */
+}
+
+.log {
+    width: 80%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 10px;
+}
+
+.workout_entry {
+    background-color: #4B2374;
+    color: white;
+    display: grid; 
+    grid-template-columns: 40% 60%;
+    /* margin: 10px 0; */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px gray;
+    align-items:center;
+    grid-gap: 10px;
+}
+
+.workout_details {
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.workout_entry:hover {
+    background-color: #32174d ;
+    color: white;
+    display: grid; 
+}
+
+.profile_photo {
+    /* width: 80%; */
+    object-fit: cover;
+    width: 100%;
+    aspect-ratio: 1/1;
+}
+
+#workout_name {
+    font-size: 1.3em;
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    display: block;
+}
+
+#workout_date {
+    font-size: 0.8em;
+    padding: 10px 0;
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    display: block;
+}
+
+#username {
+    font-size: 1em;
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    display: block;
+}
+
+.exercise_details ul {
+    padding: 0;
+}
+
+.exercise_name {
+    list-style: none;
+    font-size: 0.5em;
+    /* white-space: nowrap; */
+    /* overflow: hidden; 
+    text-overflow: ellipsis; */
+    /* display: block; */
+}

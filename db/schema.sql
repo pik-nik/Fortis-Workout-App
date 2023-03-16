@@ -70,3 +70,6 @@ SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') from workouts;
 insert into users (email, username, full_name, password_digest) VALUES ('dt', 'dt', 'dt', 'dt');
 
 SELECT * FROM users JOIN workouts on users.user_id = workouts.user_id where user_id = 1;
+
+
+SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') FROM workouts JOIN users ON workouts.user_id = users.user_id ORDER BY workout_date DESC;

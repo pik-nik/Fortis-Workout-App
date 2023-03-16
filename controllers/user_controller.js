@@ -3,6 +3,7 @@ const router = express.Router()
 const db = require("./../db")
 const bcrypt = require("bcrypt");
 const upload = require("./../middlewares/upload")
+const ensureLoggedIn = require("./../middlewares/ensure_logged_in")
 
 
 // get new user form 
@@ -11,7 +12,7 @@ router.get("/users/new", (req, res) => {
     res.render("new_user.ejs", { unableToSignUpString })
 })
 
-router.get("/users/:userid/photo/edit", (req, res) => {
+router.get("/users/:userid/photo/edit", ensureLoggedIn, (req, res) => {
     const sql = "SELECT username, user_id, profile_photo FROM users where user_id = $1"
     db.query(sql, [req.params.userid], (err, dbRes) => {
         const user = dbRes.rows[0]
@@ -19,7 +20,7 @@ router.get("/users/:userid/photo/edit", (req, res) => {
     })
 })
 
-router.get("/users/:userid/password/edit", (req, res) => {
+router.get("/users/:userid/password/edit",  ensureLoggedIn, (req, res) => {
     const sql = "SELECT username, user_id FROM users where user_id = $1"
     db.query(sql, [req.params.userid], (err, dbRes) => {
         const user = dbRes.rows[0]
@@ -27,7 +28,7 @@ router.get("/users/:userid/password/edit", (req, res) => {
     })
 })
 
-router.get("/users/:userid/edit", (req, res) => {
+router.get("/users/:userid/edit",  ensureLoggedIn, (req, res) => {
     const sql = "SELECT username, full_name, email, user_id, profile_photo FROM users where user_id = $1"
     db.query(sql, [req.params.userid], (err, dbRes) => {
         const user = dbRes.rows[0]
@@ -35,7 +36,36 @@ router.get("/users/:userid/edit", (req, res) => {
     })
 })
 
-router.get("/users/:userid", (req, res) => {
+router.get("/users/workouts", ensureLoggedIn, (req, res) => {
+    // if (!req.session.userId) {
+    //     res.redirect("/login")
+    // } else {
+        res.redirect(`/users/${!req.session.userId}/workouts`)
+    // } //! check to make sure no crashes before deleting
+})
+
+router.get("/users/:userid/workouts",  ensureLoggedIn, (req, res) => {
+    // if (!req.session.userId) {
+    //     res.redirect("/login")
+    // } else {
+            const sql = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') FROM workouts WHERE user_id = $1 ORDER BY workout_date DESC;"
+            console.log(req.session.userId, "session userId");
+
+        db.query(sql, [req.session.userId], (err, dbRes) => {
+            const workouts = dbRes.rows
+            console.log("workouts",workouts);
+
+            const sql2 = "SELECT * FROM workout_exercise_junction JOIN exercises ON workout_exercise_junction.exercise_id = exercises.exercise_id;"
+            db.query(sql2, (err, dbJunctionRes) => {
+                console.log("exercises in workouts",dbJunctionRes.rows);
+                const exercisesInWorkouts = dbJunctionRes.rows;
+                res.render("current_user_workouts", { workouts, exercisesInWorkouts })
+            })
+        })
+    // }
+})
+
+router.get("/users/:userid",  ensureLoggedIn, (req, res) => {
     const sql = "SELECT username, full_name, email, user_id, profile_photo FROM users where user_id = $1" 
     db.query(sql, [req.params.userid], (err, dbRes) => {
         const user = dbRes.rows[0]
@@ -49,8 +79,12 @@ router.get("/users/:userid", (req, res) => {
 })
 
 // users list
-router.get("/users", (req, res) => {
-    res.render("users")
+router.get("/users",  ensureLoggedIn, (req, res) => {
+    const sql = "SELECT username, full_name, email, user_id, profile_photo FROM users"
+    db.query(sql, (err, dbRes) => {
+        const users = dbRes.rows
+        res.render("users", { users })
+    })
 })
 // create user
 router.post("/users", (req, res) => {

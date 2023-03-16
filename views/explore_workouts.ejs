@@ -1,0 +1,34 @@
+<head>
+    <link rel="stylesheet" href="/css/explore_workouts.css">
+</head>
+<body>
+    <h2>Explore latest workouts</h2>
+    <section class="log">
+        <% for (let workout of workouts) { %>
+            <a href="/workouts/<%=workout.workout_id%>">
+                <div class="workout_entry">
+                    <div>
+                        <img class="profile_photo" src="<%=workout.profile_photo%>" alt="">
+                    </div>
+                    <div>
+                        <div class="workout_details">
+                            <p id="workout_name"><%=workout.name%></p>
+                            <p id="workout_date"><%=workout.to_char%></p>
+                            <p id="username">by <%=workout.username%></p>
+                        </div>
+                        <div class="exercise_details">
+                        <p class="exercise_name">
+                            <% for (const exercise of exercisesInWorkouts) { %>
+                                <% if (workout.workout_id === exercise.workout_id) { %>
+                                       <%= exercise.name %> 
+                                    <% } %> 
+                            <% } %> 
+                        </p>
+                        </div>
+                    </div>
+                </div>
+            </a> 
+        <% } %>
+    </section>
+</body>
+
