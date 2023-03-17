@@ -2,6 +2,7 @@
     box-sizing: border-box;
     font-family: 'Abel', sans-serif;
     margin: 0;
+    /* border: 1px solid red; */
 }
 
 body {
@@ -80,7 +81,55 @@ nav ul {
 
 nav li {
     list-style: none;
+    /* padding: 0; */
 }
+
+.logged_in img {
+width: auto;
+ text-align: center;
+ margin: 0 auto;
+ border-radius: 5px;
+ height: 50px;
+}
+
+.current_username {
+    font-family: 'Bebas Neue', cursive;
+    color: #522d80;
+}
+
+.logged_in {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.btns_logged_in form {
+    padding: 8px 0;
+}
+
+.btns_logged_in button {
+    padding: 0;
+    display: block;
+    text-align: center;
+    background: #989898;
+    border-radius: 3px;
+    color: #fff;
+    width: 60px;
+    height: 20px;
+    font-size: 15px;
+    line-height: 5px;
+    margin: 0 auto;
+}
+
+.btns_logged_in a {
+    color: #fff
+}
+
+.btns_logged_in button:hover {
+    background-color: #582b78;
+    color: #fff;
+}
+
 
 main {
     width: 80%;

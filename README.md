@@ -9,11 +9,13 @@ Check it out here: https://fortis.onrender.com/
 
 
 # Planning
-## Schema Tables
-https://whimsical.com/schema-tables-7GaP9mejisBZZMi44Y4iNH#
 
 ## Wireframe
+![Picture of my wireframes](/public/images/wireframes.jpg)
 
+## Schema Tables
+https://whimsical.com/schema-tables-7GaP9mejisBZZMi44Y4iNH#
+![Screenshot of my Schema ERD](/public/images/Schema%20example.png)
 
 
 # Future features

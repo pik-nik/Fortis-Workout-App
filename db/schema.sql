@@ -42,3 +42,7 @@ CREATE TABLE users (
 );
 -- node seed_dummy_exercises;
 -- node seed_dummy_users;
+
+SELECT * FROM users JOIN workouts ON users.user_id = workouts.user_id where workout_id = 5;
+
+SELECT * FROM users JOIN workouts ON users.user_id = workouts.user_id where workout_id = 5 ;
