@@ -1,0 +1,52 @@
+
+* {
+    /* border: 1px solid red; */
+}
+
+.profile-wrapper {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    margin: 50px 0;
+    gap: 2%;
+}
+
+.user-details {
+    box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+	border-radius: 10px;
+	border: 6px solid #4B0082;
+}
+
+.user-details h3 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 4em;
+}
+
+.user-details h4 {
+    font-size: 1.5em;
+}
+
+
+.user-details img {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.user-details button {
+    margin: 10px auto;
+}
+
+.workout-details {
+    box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+	border-radius: 10px;
+	border: 6px solid #4B0082;
+}
+
+.workout-details ul {
+    padding: 0;
+}
+
+.workout-details li {
+    padding-left: 0;
+    list-style: none;
+    padding-inline-start: 0;
+}

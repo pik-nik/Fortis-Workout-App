@@ -1,19 +1,35 @@
-<h2><%=user.username%></h2>
-<h3><%=user.full_name%></h3>
-<img src="<%=user.profile_photo%>" alt="">
+<head>
+    <link rel="stylesheet" href="/css/user_profile.css">
+</head>
+<body>
+    <main>
+        <div class="profile-wrapper">
+            <section class="user-details">
+                <h3><%=user.username%></h3>
+                <h4><%=user.full_name%></h4>
+                <img src="<%=user.profile_photo%>" alt="">
+            
+                <% if (Number(userIdLoggedIn) === user.user_id) { %>
+                    <section>
+                    <button> <a href="/users/<%=user.user_id%>/edit">edit profile</a> </button>
+                    </section>
+                <% } %>
+            </section>
+        
+            <section class="workout-details">
+                <h2>Athelete Stats</h2>
+                <ul>
+                    <li>Number of Workouts:</li>
+                </ul>
+                <h2>Latest Workouts</h2>
+                <ul>
+                    <% for (workout of workouts) { %>
+                    <li><a href="/workouts/<%=workout.workout_id%>"><%= workout.name %>, <%= workout.to_char %></a></li>
+                    <% } %> 
+                    <li> <a href="/users/<%=user.user_id%>/workouts">See More...</a> </li>
+                </ul>
+            </section>
+        </div>
+    </main>
 
-<% if (Number(userIdLoggedIn) === user.user_id) { %>
-    <section>
-    <button> <a href="/users/<%=user.user_id%>/edit">edit profile</a> </button>
-    </section>
-<% } %>
-
-<section>
-    <h4>Latest Workouts</h4>
-    <ul>
-        <% for (workout of workouts) { %>
-        <li><a href="/workouts/<%=workout.workout_id%>"><%= workout.name %>, <%= workout.to_char %></a></li>
-        <% } %> 
-        <li>See More</li>
-    </ul>
-</section>
+</body>

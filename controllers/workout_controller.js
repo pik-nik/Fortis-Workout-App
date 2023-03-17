@@ -62,7 +62,7 @@ router.get("/workouts/:workoutid/exercise/:exerciseid", ensureLoggedIn, (req, re
 //display workout
 router.get("/workouts/:id", ensureLoggedIn, (req, res) => {
     const sql = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') FROM workouts WHERE workout_id = $1;"
-
+    const userIdLoggedIn = req.session.userId
     db.query(sql, [req.params.id], (err, dbRes) => {
         const workout = dbRes.rows[0]
         const sql2 = "SELECT * FROM exercises JOIN workout_exercise_junction ON exercises.exercise_id = workout_exercise_junction.exercise_id WHERE workout_id = $1 ORDER BY junction_id;"
@@ -71,7 +71,13 @@ router.get("/workouts/:id", ensureLoggedIn, (req, res) => {
             const sql3 = "SELECT * FROM log_workout_entries JOIN workout_exercise_junction ON log_workout_entries.junction_id = workout_exercise_junction.junction_id JOIN exercises on exercises.exercise_id = workout_exercise_junction.exercise_id;"
             db.query (sql3, (err, dbLogRes) => {
                 const logdatas = dbLogRes.rows
-                res.render("workout_details", { workout, exercises, logdatas })
+                // const sql4 = "SELECT * FROM users JOIN workouts ON users.user_id = workouts.user_id where workout_id = $1"
+                // db.query(sql4, (err, dbUserRes) => {
+                //     const 
+                // })
+
+
+                res.render("workout_details", { workout, exercises, logdatas, userIdLoggedIn })
             })
         })
     })

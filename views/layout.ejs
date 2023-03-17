@@ -31,14 +31,21 @@
                     <li><a href="/users"><p class="explore">Find Athletes</p></a></li>
                     <li><a href="/users/workouts"><p class="workouts">My Workouts</p></a></li>
                     <% if(isLoggedIn()) { %>
-                        <li>
-                            <img src="<%=currentUser.profile_photo%>" alt="">
-                            <p><a href="/users/<%=currentUser.user_id%>"><%=currentUser.username%></a></p>     
-                            <form action="/sessions" method="post">
-                                <input type="hidden" name="_method" value="delete"/>
-                                <button>logout</button>
-                            </form>
-                            <button> <a href="/users/<%=currentUser.user_id%>/edit">settings</a> </button>
+                        <li class="logged_in">
+                            <div>
+                            <a href="/users/<%=currentUser.user_id%>"><img src="<%=currentUser.profile_photo%>" alt=""></a>
+                            <p><a href="/users/<%=currentUser.user_id%>" class="current_username"><%=currentUser.username%></a></p>
+                            </div>
+                            <div>
+                                <div class="btns_logged_in">
+                                    <form action="/sessions" method="post">
+                                        <input type="hidden" name="_method" value="delete"/>
+                                        <button>logout</button>
+                                    </form>
+                                    <button> <a href="/users/<%=currentUser.user_id%>/edit">settings</a> </button>
+                                </div>
+                            </div>
+                           
                         </li>
                     <% } else { %>
                         <li><a href="/login"><p class="sign_in">Sign In </p></a></li>

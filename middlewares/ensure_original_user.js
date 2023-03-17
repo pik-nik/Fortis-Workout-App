@@ -6,3 +6,4 @@ function ensureOriginalUser(req, res, next) {
 module.exports = ensureOriginalUser
 
 // if req.params.userid = req.sesions.userId, then display options to edit 
+

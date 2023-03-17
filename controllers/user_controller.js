@@ -51,7 +51,14 @@ router.get("/users/:userid/workouts",  ensureLoggedIn, (req, res) => {
         db.query(sql2, (err, dbJunctionRes) => {
             // console.log("exercises in workouts",dbJunctionRes.rows);
             const exercisesInWorkouts = dbJunctionRes.rows;
-            res.render("current_user_workouts", { workouts, exercisesInWorkouts })
+
+            const sql3 = "SELECT * FROM users where user_id = $1"
+            db.query(sql3, [req.params.userid], (err, dbUsersRes) => {
+                const user = dbUsersRes.rows[0]
+                res.render("user_workouts", { workouts, exercisesInWorkouts, user })
+
+            })
+
         })
     })
 })
@@ -124,14 +131,10 @@ router.post("/users", (req, res) => {
 }) 
 
 router.put("/users/:userid/photo", upload.single("uploadedFile"), (req, res) => {
-    // if(!req.file.path) {
-    //     req.redirect(`/users/${req.params.userid}/photo/edit`)
-    // } else { //! ask about this if condition to prevent route breaking
-        const sql = `UPDATE users SET profile_photo = $1 where user_id = $2`
-        db.query(sql, [req.file.path, req.params.userid], (err, dbRes) => {
-            res.redirect(`/users/${req.params.userid}`)
-        })
-    // }
+    const sql = `UPDATE users SET profile_photo = $1 where user_id = $2`
+    db.query(sql, [req.file.path, req.params.userid], (err, dbRes) => {
+        res.redirect(`/users/${req.params.userid}`)
+    })
 })
 
 router.put("/users/:userid/password", (req, res) => {
