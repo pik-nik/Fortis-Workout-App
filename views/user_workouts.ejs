@@ -3,11 +3,14 @@
 </head>
 <body>
     <h2><span><%= user.username%></span>'s Workouts</h2>
-    <section class="nav">
-        <h3><a href="/workouts/new">Start New Workout</a></h3>
-        <!-- add search function to look for old workout -->
-        <h3>Find a Workout</h3> 
-    </section>
+
+    <% if (Number(currentUserSessionId) === user.user_id) { %>
+        <section class="nav">
+            <h3><a href="/workouts/new">Start New Workout</a></h3>
+            <!-- add search function to look for old workout -->
+            <h3>Find a Workout</h3> 
+        </section>
+    <% } %>
     
     <section class="log">
         <h4>Workout Log</h4>
