@@ -33,13 +33,13 @@
                     <% if(isLoggedIn()) { %>
                         <li class="logged_in">
                             <div>
-                            <a href="/users/<%=currentUser.user_id%>"><img src="<%=currentUser.profile_photo%>" alt=""></a>
-                            <p><a href="/users/<%=currentUser.user_id%>" class="current_username"><%=currentUser.username%></a></p>
+                                <a href="/users/<%=currentUser.user_id%>"><img src="<%=currentUser.profile_photo%>" alt=""></a>
+                                <p><a href="/users/<%=currentUser.user_id%>" class="current_username"><%=currentUser.username%></a></p>
                             </div>
                             <div>
                                 <div class="btns_logged_in">
-                                    <form action="/sessions" method="post">
-                                        <input type="hidden" name="_method" value="delete"/>
+                                    <form action="/sessions?_method=DELETE" method="post">
+                                        <!-- <input type="hidden" name="_method" value="delete"/> -->
                                         <button>logout</button>
                                     </form>
                                     <button> <a href="/users/<%=currentUser.user_id%>/edit">settings</a> </button>
