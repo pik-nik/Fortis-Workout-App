@@ -210,15 +210,10 @@ router.put("/workouts/:workoutid/exercise/:exerciseid", (req, res) => {
 })
 
 router.put("/workouts/:id", (req, res) => {
-    if (!req.body.name || !req.body.workout_date) {
-        res.redirect(`/workouts/${req.params.id}/edit`)
-        return
-    } else {
-        const sql = "UPDATE workouts SET name = $1, workout_date = $2 WHERE workout_id = $3;"
-        db.query(sql, [req.body.name, req.body.date, req.params.id], (err, dbRes) => {
-            res.redirect(`/workouts/${req.params.id}`)
-        })
-    }
+    const sql = "UPDATE workouts SET name = $1, workout_date = $2 WHERE workout_id = $3;"
+    db.query(sql, [req.body.name, req.body.date, req.params.id], (err, dbRes) => {
+        res.redirect(`/workouts/${req.params.id}`)
+    })
 })
 
 router.delete("/workouts/:workoutid/exercise/:exerciseid/log/:logid", (req, res) => {

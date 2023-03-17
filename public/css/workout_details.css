@@ -1,11 +1,126 @@
+.workout_details h3 {
+    font-family: 'Bebas Neue', cursive;
+    color: #522d80;
+    font-size: 3em;
+}
+
+.btn-workout {
+    width: 30%;
+    display: grid;
+    margin: 10px auto 20px auto;
+    grid-template-columns: 50% 50%;
+}
+
+.btn-workout button {
+    background: #32174d;
+    border-radius: 3px;
+    color: #fff;
+}
+
+.btn-workout button:hover {
+    background-color: #621da8;
+    color: #fff;
+}
+
 .exercises {
     border: 1px solid black;
+    width: 80%;
+    margin: 20px auto;
+
+	background: #FAFAFA;
+	padding: 20px;
+	box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+	border-radius: 10px;
+	border: 6px solid #4B0082;
+}
+
+.exercises h4 {
+    color: #522d80;
+    font-size: 2em;
 }
 
 .exercise_log {
-    border: 2px solid pink;
+    margin: 20px auto;
+    width: 80%;
+    border:1px solid #DDDDDD;
+	border-radius: 3px;
+    display: grid;
+    grid-template-columns: 40% 60%;
+}
+
+.btn-exercises {
+    width: 80%;
+    display: grid;
+    margin: 0 auto;
+    grid-template-columns: 50% 50%;
+}
+
+.btn-exercises button {
+    /* background: #32174d; */
+    background-color: #621da8;
+    border-radius: 3px;
+    color: #fff;
+}
+
+.btn-exercises button:hover {
+    /* background-color: #621da8; */
+    background: #32174d;
+    color: #fff;
+}
+
+.exercise_name {
+    padding: 20px 0;
+    color: #522d80;
+    font-size: 2em;
 }
 
 .sets_list {
-    border: 2px solid skyblue;
+    padding: 0;
+    display: grid;
+    margin: 0 auto;
+    grid-template-columns: 50% 50%;
+
+}
+
+.sets_list {
+    list-style: none;
+}
+
+.sets_detail {
+    padding: 10px;
+
+}
+
+.btn-sets form {
+    margin: 6px;
+}
+
+
+.btn_add_set {
+    /* background: #32174d; */
+    background-color: #621da8;
+    border-radius: 3px;
+    color: #fff;
+    margin:10px;
+}
+
+.btn_add_set:hover {
+    /* background-color: #621da8; */
+    background: #32174d;
+    color: #fff;
+}
+
+
+.btn_add_exercise {
+    /* background: #32174d; */
+    background-color: #621da8;
+    border-radius: 3px;
+    color: #fff;
+    margin:10px;
+}
+
+btn_add_exercise:hover {
+    /* background-color: #621da8; */
+    background: #32174d;
+    color: #fff;
 }
