@@ -159,8 +159,8 @@ router.post("/workouts",  (req, res) => {
         res.redirect("/workouts/new")
         return
     } else {
-        const sql = "INSERT INTO workouts (name, workout_date) VALUES ($1, $2) returning workout_id;"
-        db.query(sql, [req.body.name, req.body.workout_date], (err, dbRes) => {
+        const sql = "INSERT INTO workouts (name, workout_date, user_id) VALUES ($1, $2, $3) returning workout_id;"
+        db.query(sql, [req.body.name, req.body.workout_date, req.session.userId], (err, dbRes) => {
              // add later req.session.userId or  res.locals.currentUser.id
             res.redirect(`/workouts/${dbRes.rows[0].workout_id}`)
         })

@@ -4,6 +4,7 @@ DROP TABLE workouts;
 DROP TABLE exercises;
 DROP TABLE workout_exercise_junction;
 DROP TABLE log_workout_entries;
+DROP TABLE users;
 
 CREATE TABLE workouts (
     workout_id SERIAL PRIMARY KEY, 
