@@ -44,7 +44,9 @@ router.get("/users/workouts", ensureLoggedIn, (req, res) => {
 router.get("/users/:userid/workouts",  ensureLoggedIn, (req, res) => {
     const sql = "SELECT *, TO_CHAR(workout_date, 'FMMonth DD, YYYY') FROM workouts WHERE user_id = $1 ORDER BY workout_date DESC;"
     // console.log(req.session.userId, "session userId");
-    db.query(sql, [req.session.userId], (err, dbRes) => {
+   const currentUserSessionId = req.session.userId
+   const workoutUserId = req.params.userid
+    db.query(sql, [workoutUserId], (err, dbRes) => {
         const workouts = dbRes.rows
         // console.log("workouts",workouts);
         const sql2 = "SELECT * FROM workout_exercise_junction JOIN exercises ON workout_exercise_junction.exercise_id = exercises.exercise_id;"
@@ -55,7 +57,7 @@ router.get("/users/:userid/workouts",  ensureLoggedIn, (req, res) => {
             const sql3 = "SELECT * FROM users where user_id = $1"
             db.query(sql3, [req.params.userid], (err, dbUsersRes) => {
                 const user = dbUsersRes.rows[0]
-                res.render("user_workouts", { workouts, exercisesInWorkouts, user })
+                res.render("user_workouts", { workouts, exercisesInWorkouts, user, currentUserSessionId })
 
             })
 
@@ -122,7 +124,8 @@ router.post("/users", (req, res) => {
                     const sql2 = "INSERT INTO users (email, username, full_name, password_digest, profile_photo) VALUES ($1, $2, $3, $4, $5) RETURNING user_id;" 
                     db.query(sql2, [email, username, req.body.full_name, digestedPassword, default_profile_picture_url], (err, insertRes) => {
                         req.session.userId = insertRes.rows[0].user_id
-                        res.redirect("/")
+
+                        res.redirect(`/users/${insertRes.rows[0].user_id}`)
                     })
                 })
             })  
