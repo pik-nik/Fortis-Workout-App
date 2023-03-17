@@ -95,7 +95,7 @@ router.post("/users", (req, res) => {
         res.redirect("/users/new")
     } else {
         const sql1 = "SELECT username, full_name, email, user_id, profile_photo FROM users WHERE email = $1 OR username = $2;"
-        db.query(sql1, [email, username], (err, selectRes) => {
+        db.query(sql1, [email, username.toLowerCase()], (err, selectRes) => {
             if (selectRes.rows.length > 0) {
                 const existingUserList = selectRes.rows
                 for (const user of existingUserList) {
@@ -104,7 +104,7 @@ router.post("/users", (req, res) => {
                         res.redirect("/users/new")
                         return 
                     }
-                    if (user.username === username) {
+                    if (user.username === username.toLowerCase()) {
                         const unableToSignUpString = "Username is already taken, please pick another one"
                         req.flash("info", "Username is already taken, please pick another one")
                         res.redirect("/users/new")
@@ -122,7 +122,7 @@ router.post("/users", (req, res) => {
                 bcrypt.hash(plainTextPassword, salt, (err, digestedPassword) => {
                     const default_profile_picture_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png?20220226140232"
                     const sql2 = "INSERT INTO users (email, username, full_name, password_digest, profile_photo) VALUES ($1, $2, $3, $4, $5) RETURNING user_id;" 
-                    db.query(sql2, [email, username, req.body.full_name, digestedPassword, default_profile_picture_url], (err, insertRes) => {
+                    db.query(sql2, [email, username.toLowerCase(), req.body.full_name, digestedPassword, default_profile_picture_url], (err, insertRes) => {
                         req.session.userId = insertRes.rows[0].user_id
 
                         res.redirect(`/users/${insertRes.rows[0].user_id}`)
@@ -180,7 +180,7 @@ router.put("/users/:userid", (req, res) => {
                         res.redirect(`/users/${req.params.userid}/edit`)
                         return 
                     }
-                    if (existingUser.username === username && existingUser.user_Id !== Number(req.params.id)) {
+                    if (existingUser.username === username.toLowerCase() && existingUser.user_Id !== Number(req.params.id)) {
                         req.flash("info", "Username is taken, please pick another one")
                         res.redirect(`/users/${req.params.userid}/edit`)
                         return
@@ -188,7 +188,7 @@ router.put("/users/:userid", (req, res) => {
                 }
             } 
             const sql2 = "UPDATE users SET full_name = $1, email = $2, username = $3 where user_id = $4"
-            db.query(sql2, [req.body.full_name, email, username, req.params.userid], (err, UpdateRes) => {
+            db.query(sql2, [req.body.full_name, email, username.toLowerCase(), req.params.userid], (err, UpdateRes) => {
                 res.redirect(`/users/${req.params.userid}`)
             })
         })
