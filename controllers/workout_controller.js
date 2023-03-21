@@ -71,13 +71,12 @@ router.get("/workouts/:id", ensureLoggedIn, (req, res) => {
             const sql3 = "SELECT * FROM log_workout_entries JOIN workout_exercise_junction ON log_workout_entries.junction_id = workout_exercise_junction.junction_id JOIN exercises on exercises.exercise_id = workout_exercise_junction.exercise_id;"
             db.query (sql3, (err, dbLogRes) => {
                 const logdatas = dbLogRes.rows
-                // const sql4 = "SELECT * FROM users JOIN workouts ON users.user_id = workouts.user_id where workout_id = $1"
-                // db.query(sql4, (err, dbUserRes) => {
-                //     const 
-                // })
 
-
-                res.render("workout_details", { workout, exercises, logdatas, userIdLoggedIn })
+                const sql4 = "SELECT * FROM users JOIN workouts ON users.user_id = workouts.user_id where workout_id = $1"
+                db.query(sql4, [req.params.id], (err, dbUserRes) => {
+                    const user = dbUserRes.rows[0]
+                    res.render("workout_details", { workout, exercises, logdatas, userIdLoggedIn, user})
+                })
             })
         })
     })
@@ -101,9 +100,12 @@ router.get("/workouts", ensureLoggedIn, (req, res) => {
 
 router.get("/workouts/:id/edit", ensureLoggedIn, (req, res) => {
     const sql = "SELECT *, TO_CHAR(workout_date, 'yyyy-mm-dd') FROM workouts WHERE workout_id = $1"
-    
     db.query(sql, [req.params.id], (err, dbRes) => {
         const workout = dbRes.rows[0]
+        if (workout.user_id !== req.session.userId) {
+            res.redirect(`/workouts/${req.params.id}`)
+            return
+        }
         res.render("edit_workout", {workout})
     })
 })

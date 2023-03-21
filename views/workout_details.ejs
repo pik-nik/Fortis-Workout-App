@@ -6,6 +6,7 @@
         <h2>Workout Details</h2>
         <h3><%= workout.name %></h3>
         <p><%= workout.to_char %></p>
+        <p>by <%=user.username%></p>
 
         <% if (Number(userIdLoggedIn) === workout.user_id) { %>
             <div class="btn-workout">
@@ -70,6 +71,7 @@
                         <form action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>">
                             <button class="btn_add_set">add set</button>
                         </form>
+                        
                     <% } %>
                 </div>
 
