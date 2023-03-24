@@ -33,7 +33,7 @@
             <p><%= message %></p>
             <% } %>
 
-        <p> <a href="/users/<%=user.user_id%>/password/edit">Edit password here</a></p>
+        <p class="edit-pw"> <a href="/users/<%=user.user_id%>/password/edit">Edit password here</a></p>
         <form action="/users/<%=user.user_id%>?_method=DELETE" method="post">
             <button>Delete profile</button>
         </form>

@@ -107,3 +107,7 @@ input[type=file] {
 ul {
     padding: 0;
 }
+
+.edit-pw {
+    padding-bottom: 20px
+}
