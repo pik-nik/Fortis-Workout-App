@@ -12,11 +12,22 @@ Please note that the website is currently not responsive for mobile and tablets.
 ![Picture of my homepage](/public/images/homepage.png)
 
 ## Features
-Users can log their workouts including exercises and sets/reps and share it with other users. 
+Fortis is latin for "strong". My app encourages users to post their workouts and share it with the community. 
+
+When logging workouts, users can add/edit/delete exercises, sets, reps and weights. 
 ![Add an exercise](/public/gifs/addexercise.gif)
 
+When creating or editing users, the database will be checked if a username or email already exists and passwords are checked to ensure they match. If not, the user will be redirected to the form and flash messages will appear. 
+![passwords do not match](/public/gifs/flash_messages.gif)
+
+To speed up sign up process, a default profile picture is given to all new users. Users can later update their picture through "edit profile" on their profile page or settings. 
+![new user](/public/gifs/create_user.gif)
+
+Whilst buttons to add, edit and delete are shown on user's own workout details page and profile page these buttons do not appear if a user goes to another user's workouts. The edit pages have also been safeguarded such that only the user who made the workout can access it. 
+![safeguarded links and buttons](/public/gifs/safeguarded.gif)
+
 ## Technologies used
-JavaScript, Node.js Postgres, Express, EJS, CSS
+JavaScript, Node.js, Postgres, Express, EJS, CSS
 
 # Inspiration
 I was talking to my lifting coach about how she couldn't find a great app that logged workouts. The one we were currently using was full of many bugs so I thought I would dabble in making my own.
@@ -62,4 +73,5 @@ Here is a list of future features I would like to add:
 * express-session https://www.npmjs.com/package/express-session
 * memorystore https://github.com/roccomuso/memorystore
 * method-override https://www.npmjs.com/package/method-override
+* nodemon https://www.npmjs.com/package/nodemon
 * pg https://node-postgres.com/

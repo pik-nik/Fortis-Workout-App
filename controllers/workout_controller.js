@@ -226,8 +226,8 @@ router.delete("/workouts/:workoutid/exercise/:exerciseid/log/:logid", (req, res)
 })
 
 router.delete("/workouts/:workoutid/exercise/:exerciseid", (req, res) => {
-    const sql = "DELETE FROM exercises WHERE exercise_id = $1;"
-    db.query(sql, [req.params.exerciseid], (err, dbRes) => {
+    const sql = "DELETE FROM workout_exercise_junction WHERE junction_id = $1;"
+    db.query(sql, [req.body.junction_id], (err, dbRes) => {
         res.redirect(`/workouts/${req.params.workoutid}`)
     })
 })

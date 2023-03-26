@@ -34,6 +34,7 @@
                                 <button>edit exercise name</button>
                             </form>
                             <form action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>?_method=DELETE" method="post">
+                                <input type="hidden" name="junction_id" value="<%=exercise.junction_id%>"/>
                                 <button>delete exercise</button>
                             </form>
                         </div>
