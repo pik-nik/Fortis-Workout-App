@@ -1,15 +1,22 @@
 
 
 # Project #2: Building Your First Full-stack Application
-As part of GA Software Engineering Immersive course, I have made a workout app :muscle: for my second project. The criteria was to make a password-protected, full-stack CRUD application that stores data in PostgreSQL.
+As part of GA Software Engineering Immersive course, I have made a workout app :muscle: for my second project. 
 
-Users can log their workouts including exercises and sets/reps and share it with other users. 
+The criteria was to make a password-protected, full-stack CRUD application that stores data in PostgreSQL in a little over 3 days.
 
 Check it out here: https://fortis.onrender.com/
+
+Please note that the website is currently not responsive for mobile and tablets. This is a work in process for the next version. 
+
 ![Picture of my homepage](/public/images/homepage.png)
 
+## Features
+Users can log their workouts including exercises and sets/reps and share it with other users. 
+![Add an exercise](/public/gifs/addexercise.gif)
+
 ## Technologies used
-Javascript, Node.js Postgres, Express, EJS, CSS
+JavaScript, Node.js Postgres, Express, EJS, CSS
 
 # Inspiration
 I was talking to my lifting coach about how she couldn't find a great app that logged workouts. The one we were currently using was full of many bugs so I thought I would dabble in making my own.
@@ -18,20 +25,41 @@ I was talking to my lifting coach about how she couldn't find a great app that l
 It didn't take long in the planning process for me to realise the capacity of what I wanted to make in a bit over 3 days...
 
 ## Schema Tables
+https://whimsical.com/schema-tables-7GaP9mejisBZZMi44Y4iNH#
+
 During class codealongs we had only worked with ideas that required 2 tables – one representing someone using your application (users), and one that stored whatever was the intended purpose of the app. As I began to draw out my ERD, I started adding more and more tables to the mix. 
 
-https://whimsical.com/schema-tables-7GaP9mejisBZZMi44Y4iNH#
+I would need separate tables to order my workouts, exercises and sets of reps and weights. A workout contained many exercises and an exercise can belong to many workouts. Because of this relationship, I used a junction table to create a relationship between workouts and exercises.
+
+From the schema tables I made during planning, I decided to narrow down the tables I implemented in my code due to the time constraints of the project.The tables in blue were the ones I went ahead with and the ones in red were the ones I excluded but will endeavour to add in future versions. 
+
 ![Screenshot of my Schema ERD](/public/images/Schema%20example.png)
 
 ## Wireframe
+Drawing up my wireframe made it easy for me lay out how each page would look. I chose to have a consistent form css styling which a lot of the pages had. 
 ![Picture of my wireframes](/public/images/wireframes.jpg)
 
 
 # v 1.0.0 
 - This is the first version and what I submitted as part of my second project for General Assembly Software Engineering Immersive. 
 
-
-
 # Future features
-- allow coaches to log workouts for clients to do and clients to upload, choose to make it private, only accessible to coach or club access or public with groups 
-- Copy a workout 
+Here is a list of future features I would like to add: 
+1. Make the app responsive to phones and websites 
+2. Allow the option to copy workouts. In order to do this I will need to add a user log table which is a log of workouts. This will allow a user to do a workout that they did not originally create. 
+3. Add more tables including exercise type, equipment used, workout type which will allow more search options for people to find workout or users for specific training styles e.g. powerlifting or bodybuilding.
+4. Allow the choice to make the workout private, only accessible to coach or "friends" or public.
+5. Allow coaches to post workouts for their clients to do. 
+
+# Dependencies used
+* bcrypt https://github.com/kelektiv/node.bcrypt.js/
+* cloudinary https://www.npmjs.com/package/cloudinary
+* dotenv https://www.npmjs.com/package/dotenv
+* EJS https://ejs.co/
+* Express https://expressjs.com/
+* express ejs layouts https://github.com/soarez/express-ejs-layouts
+* express-flash https://www.npmjs.com/package/express-flash
+* express-session https://www.npmjs.com/package/express-session
+* memorystore https://github.com/roccomuso/memorystore
+* method-override https://www.npmjs.com/package/method-override
+* pg https://node-postgres.com/
