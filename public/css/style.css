@@ -106,7 +106,7 @@ nav li {
     .explore,
     .workouts,
     .sign_in {
-        font-size: 15px;
+        font-size: 12px;
     }
 
     .explore:hover,
@@ -222,8 +222,12 @@ footer span:hover {
 
 @media screen and (max-width: 768px) {
     main {
-        width: 90%;
+        width: 85%;
         padding-bottom: 15px;
+    }
+    main h2 {
+        padding: 10px 0;
+        font-size: 2em;
     }
     footer {
         padding: 10px 5px;

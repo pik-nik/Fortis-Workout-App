@@ -1,27 +1,48 @@
 <head>
-    <link rel="stylesheet" href="/css/form.css">
+    <link rel="stylesheet" href="/css/form.css" />
 </head>
 <body>
     <section class="form_container">
         <h2>Edit Profile for <%= user.username%></h2>
-        <img class="edit_profile_photo" src="<%=user.profile_photo%>" alt="">
-        <p> <a href="/users/<%=user.user_id%>/photo/edit">Edit profile photo here</a></p>
-        <form action="/users/<%=user.user_id%>?_method=PUT" method="post">
-            <!-- <input type="hidden" name="_method" value="put"/> -->
+        <div class="edit-profile-photo">
+            <img
+                class="profile_photo"
+                src="<%=user.profile_photo%>"
+                alt="photo of <%= user.username%>"
+            />
+            <button>
+                <a href="/users/<%=user.user_id%>/photo/edit"
+                    >Edit profile photo here</a
+                >
+            </button>
+        </div>
+        <form
+            action="/users/<%=user.user_id%>?_method=PUT"
+            method="post"
+            class="edit_profile"
+        >
             <ul>
                 <li>
                     <label for="email">Email</label>
-                    <input type="text" name="email" value="<%=user.email%>"/>
+                    <input type="text" name="email" value="<%=user.email%>" />
                     <span>Update email</span>
                 </li>
                 <li>
                     <label for="username">Username</label>
-                    <input type="text" name="username" value="<%=user.username%>"/>
+                    <input
+                        type="text"
+                        name="username"
+                        value="<%=user.username%>"
+                    />
                     <span>Change your username</span>
                 </li>
                 <li>
                     <label for="full_name">Name</label>
-                    <input type="text" name="full_name" value="<%=user.full_name%>"/>
+                    <input
+                        type="text"
+                        name="full_name"
+                        value="<%=user.full_name%>"
+                    />
                     <span>Change your display name</span>
                 </li>
                 <li>
@@ -30,12 +51,16 @@
             </ul>
         </form>
         <% if (message) { %>
-            <p><%= message %></p>
-            <% } %>
+        <p><%= message %></p>
+        <% } %>
 
-        <p class="edit-pw"> <a href="/users/<%=user.user_id%>/password/edit">Edit password here</a></p>
+        <button class="edit-pw">
+            <a href="/users/<%=user.user_id%>/password/edit"
+                >Edit password here</a
+            >
+        </button>
         <form action="/users/<%=user.user_id%>?_method=DELETE" method="post">
-            <button>Delete profile</button>
+            <button class="delete-profile">Delete profile</button>
         </form>
     </section>
 </body>

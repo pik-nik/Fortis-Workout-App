@@ -1,47 +1,59 @@
-
-* {
-    /* border: 1px solid red; */
-}
-
+/* profile */
 .profile-wrapper {
     display: grid;
-    grid-template-columns: 40% 60%;
+    grid-template-columns: 40% 58%;
     margin: 50px 0;
     gap: 2%;
 }
 
-.user-details {
+@media screen and (max-width: 768px) {
+    .profile-wrapper {
+        display: flex;
+        flex-direction: column;
+        margin: 30px 0;
+    }
+}
+
+.user-details,
+.workout-details {
     box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
-	border-radius: 10px;
-	border: 6px solid #4B0082;
-    padding: 15px 0;
+    border-radius: 10px;
+    border: 6px solid #4b0082;
+}
+/* user details */
+
+.user-details {
+    padding: 15px 5px;
 }
 
 .user-details h3 {
-    font-family: 'Barlow', sans-serif;
-    font-size: 4em;
+    font-family: "Barlow", sans-serif;
+    font-size: 3.5em;
 }
 
 .user-details h4 {
     font-size: 1.5em;
 }
 
-
 .user-details img {
     width: 90%;
-    margin: 0 auto;
-    border-radius: 10px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    margin: 15px auto;
+    border-radius: 50%;
 }
 
-.user-details button {
-    margin: 10px auto;
+@media screen and (max-width: 768px) {
+    .user-details h3 {
+        font-size: 2em;
+    }
+
+    .user-details h4 {
+        font-size: 1em;
+    }
 }
 
-.workout-details {
-    box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
-	border-radius: 10px;
-	border: 6px solid #4B0082;
-}
+/* workout details */
 
 .workout-details ul {
     padding: 0;
@@ -51,4 +63,33 @@
     padding-left: 0;
     list-style: none;
     padding-inline-start: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .workout-details:last-child {
+        margin-top: 10px;
+    }
+}
+
+/* buttons */
+
+.profile-wrapper button {
+    padding: 2px 5px;
+    background: #989898;
+    border-radius: 5px;
+    font-size: 15px;
+    margin: 0px auto;
+}
+
+.profile-wrapper button a {
+    color: #fff;
+}
+
+.profile-wrapper button:hover {
+    background-color: #522d80;
+    color: #fff;
+}
+
+.workout-details button {
+    margin: 10px 0;
 }
