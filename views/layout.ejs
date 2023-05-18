@@ -1,69 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fortis</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@1,900&display=swap" rel="stylesheet"> -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Barlow:ital,wght@1,900&family=Bebas+Neue&display=swap" rel="stylesheet">
-</head>
-<body>
-    
-    <div class="container">
-        <header>
-            <nav>
-                <div class="title">
-                    <a href="/">
-                        <img src="https://cdn-icons-png.flaticon.com/512/308/308911.png" alt="" class="logo">
-                    </a>
-                    <a href="/">
-                        <h1>fortis</h1>
-                    </a>
-                </div>
-                <ul>
-                    <li><a href="/workouts"><p class="explore">Explore Workouts</p></a></li>
-                    <li><a href="/users"><p class="explore">Find Athletes</p></a></li>
-                    <li><a href="/users/workouts"><p class="workouts">My Workouts</p></a></li>
-                    <% if(isLoggedIn()) { %>
-                        <li class="logged_in">
-                            <div>
-                                <a href="/users/<%=currentUser.user_id%>"><img src="<%=currentUser.profile_photo%>" alt=""></a>
-                                <p><a href="/users/<%=currentUser.user_id%>" class="current_username"><%=currentUser.username%></a></p>
-                            </div>
-                            <div>
-                                <div class="btns_logged_in">
-                                    <form action="/sessions?_method=DELETE" method="post">
-                                        <!-- <input type="hidden" name="_method" value="delete"/> -->
-                                        <button>logout</button>
-                                    </form>
-                                    <button> <a href="/users/<%=currentUser.user_id%>/edit">settings</a> </button>
-                                </div>
-                            </div>
-                           
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Fortis</title>
+        <link rel="stylesheet" href="/css/style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Abel&family=Barlow:ital,wght@1,900&family=Bebas+Neue&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <nav>
+                    <div class="title">
+                        <a href="/">
+                            <img
+                                src="https://cdn-icons-png.flaticon.com/512/308/308911.png"
+                                alt=""
+                                class="logo"
+                            />
+                            <h1>fortis</h1>
+                        </a>
+                    </div>
+                    <ul>
+                        <li>
+                            <a href="/workouts"
+                                ><p class="explore">Explore Workouts</p></a
+                            >
                         </li>
-                    <% } else { %>
-                        <li><a href="/login"><p class="sign_in">Sign In </p></a></li>
-                    <% } %>
-                    
-                </ul>
-                
-            </nav>
-        </header>
-        <main>
-            
-            <%- body %> 
-            
-        </main>
-        <footer>  &copy; 2023 pik-nik </footer>
-        
-        
-    </div>
-
-</body>
+                        <li>
+                            <a href="/users"
+                                ><p class="explore">Find Athletes</p></a
+                            >
+                        </li>
+                        <li>
+                            <a href="/users/workouts"
+                                ><p class="workouts">My Workouts</p></a
+                            >
+                        </li>
+                        <% if(isLoggedIn()) { %>
+                        <li class="logged_in">
+                            <div class="profile">
+                                <a href="/users/<%=currentUser.user_id%>"
+                                    ><img
+                                        src="<%=currentUser.profile_photo%>"
+                                        alt="profile picture of <%=currentUser.user_id%>"
+                                    />
+                                    <p class="current_username">
+                                        <%=currentUser.username%>
+                                    </p></a
+                                >
+                            </div>
+                            <div class="btns_logged_in">
+                                <form
+                                    action="/sessions?_method=DELETE"
+                                    method="post"
+                                >
+                                    <button>logout</button>
+                                </form>
+                                <button>
+                                    <a
+                                        href="/users/<%=currentUser.user_id%>/edit"
+                                        >settings</a
+                                    >
+                                </button>
+                            </div>
+                        </li>
+                        <% } else { %>
+                        <li>
+                            <a href="/login"><p class="sign_in">Sign In</p></a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </nav>
+            </header>
+            <main><%- body %></main>
+            <footer>
+                &copy; 2023 pik-nik |
+                <a href="https://github.com/pik-nik/fortis_workout_app"
+                    >Github</a
+                >
+            </footer>
+        </div>
+    </body>
 </html>
