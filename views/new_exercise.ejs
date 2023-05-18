@@ -1,5 +1,5 @@
 <head>
-    <link rel="stylesheet" href="/css/form.css">
+    <link rel="stylesheet" href="/css/form.css" />
 </head>
 <body>
     <section class="form_container">
@@ -9,29 +9,29 @@
                 <li>
                     <label for="name"> Exercise Name </label>
                     <select name="name" id="name">
-                        <option value="">--Please choose an option--</option>
+                        <option value="">-- Please choose an option --</option>
                         <% for (const exercise of exercises) { %>
-                            <option value="<%=exercise.name%>"><%=exercise.name%></option>
+                        <option value="<%=exercise.name%>">
+                            <%=exercise.name%>
+                        </option>
                         <% } %>
                     </select>
-                    <input type="submit" value="Add">
+                    <span>Select exercise</span>
                 </li>
+                <li><input type="submit" value="Add" /></li>
             </ul>
         </form>
         <form action="/workouts/<%=workoutId%>" method="post">
             <ul>
                 <li>
-                    <label for="">Exercise not in list? Add exercise here:</label>
-                    <input type="text" name="name"/>
-                    <button>Add</button>
+                    <label for=""
+                        >Exercise not in list? Add exercise here:</label
+                    >
+                    <input type="text" name="name" />
+                    <span>Add new exercise name</span>
                 </li>
-                <li>
-                </li>
+                <li class="add-or-edit-btn"><button>Add</button></li>
             </ul>
         </form>
-
     </section>
-
-
-
 </body>

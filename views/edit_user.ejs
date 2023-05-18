@@ -16,11 +16,7 @@
                 >
             </button>
         </div>
-        <form
-            action="/users/<%=user.user_id%>?_method=PUT"
-            method="post"
-            class="edit_profile"
-        >
+        <form action="/users/<%=user.user_id%>?_method=PUT" method="post">
             <ul>
                 <li>
                     <label for="email">Email</label>
@@ -45,7 +41,7 @@
                     />
                     <span>Change your display name</span>
                 </li>
-                <li>
+                <li class="add-or-edit-btn">
                     <button>Update</button>
                 </li>
             </ul>

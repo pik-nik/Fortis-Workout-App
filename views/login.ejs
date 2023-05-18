@@ -1,29 +1,29 @@
 <head>
-    <link rel="stylesheet" href="/css/form.css">
+    <link rel="stylesheet" href="/css/form.css" />
 </head>
 <body>
     <section class="form_container">
         <h2>Login</h2>
         <% if (message) { %>
-            <p><%= message %></p>
-            <% } %>
+        <p><%= message %></p>
+        <% } %>
         <form action="/sessions" method="post">
             <ul>
                 <li>
                     <label for="">Email</label>
-                    <input type="text" name="email">
+                    <input type="text" name="email" />
                     <span>Enter your email</span>
                 </li>
                 <li>
                     <label for="">Password</label>
-                    <input type="password" name="password">
+                    <input type="password" name="password" />
                     <span>Enter your password</span>
                 </li>
-                <li>
+                <li class="add-or-edit-btn">
                     <button>Login</button>
                 </li>
             </ul>
         </form>
-        <p> <a href="/users/new">Not a member yet? Sign up here</a> </p>
+        <p><a href="/users/new">Not a member yet? Sign up here</a></p>
     </section>
 </body>

@@ -7,7 +7,10 @@
             <section class="user-details">
                 <h3><%=user.username%></h3>
                 <h4><%=user.full_name%></h4>
-                <img src="<%=user.profile_photo%>" alt="" />
+                <img
+                    src="<%=user.profile_photo%>"
+                    alt="photo of <%=user.username%>"
+                />
 
                 <% if (Number(userIdLoggedIn) === user.user_id) { %>
                 <section>

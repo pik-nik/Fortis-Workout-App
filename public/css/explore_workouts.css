@@ -1,59 +1,55 @@
-* {
-    /* border: 1px solid red; */
-}
-
 .log {
     width: 80%;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-gap: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .workout_entry {
-    background-color: #4B2374;
+    background-color: #4b2374;
     color: white;
-    display: grid; 
+    width: 300px;
+    display: grid;
     grid-template-columns: 40% 60%;
-    /* margin: 10px 0; */
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 4px 8px gray;
-    align-items:center;
-    grid-gap: 10px;
-}
-
-.workout_details {
-    margin: 0 auto;
-    padding: 0 10px;
+    align-items: center;
+    margin: 5px;
 }
 
 .workout_entry:hover {
-    background-color: #32174d ;
+    background-color: #32174d;
     color: white;
-    display: grid; 
+}
+
+.workout_details {
+    margin: 0 auto 15px auto;
+    padding: 0 10px;
 }
 
 .profile_photo {
-    /* width: 80%; */
     object-fit: cover;
     width: 100%;
     aspect-ratio: 1/1;
+    border-radius: 50%;
 }
 
 #workout_name {
     font-size: 1.3em;
     white-space: nowrap;
-    overflow: hidden; 
+    overflow: hidden;
     text-overflow: ellipsis;
     display: block;
 }
 
 #workout_date {
     font-size: 0.8em;
-    padding: 10px 0;
+    padding: 2px 0;
     white-space: nowrap;
-    overflow: hidden; 
+    overflow: hidden;
     text-overflow: ellipsis;
     display: block;
 }
@@ -61,20 +57,51 @@
 #username {
     font-size: 1em;
     white-space: nowrap;
-    overflow: hidden; 
+    overflow: hidden;
     text-overflow: ellipsis;
     display: block;
 }
 
-.exercise_details ul {
-    padding: 0;
+.exercise_details {
+    display: flex;
+    font-size: 0.5em;
+    margin-bottom: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 25px;
 }
 
-.exercise_name {
-    list-style: none;
-    font-size: 0.5em;
-    /* white-space: nowrap; */
-    /* overflow: hidden; 
-    text-overflow: ellipsis; */
-    /* display: block; */
+.exercise_details p {
+    padding: 1px 3px;
+}
+
+@media screen and (max-width: 768px) {
+    .log {
+        width: 90%;
+    }
+    .workout_entry {
+        width: 140px;
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+        grid-gap: 2px;
+        margin: 5px;
+    }
+    #workout_name {
+        font-size: 1em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
+
+    #workout_date {
+        font-size: 0.6em;
+    }
+    #username {
+        font-size: 0.9em;
+    }
 }

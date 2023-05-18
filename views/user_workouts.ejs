@@ -1,39 +1,37 @@
 <head>
-    <link rel="stylesheet" href="/css/user_workouts.css">
+    <link rel="stylesheet" href="/css/user_workouts.css" />
 </head>
 <body>
     <h2><span><%= user.username%></span>'s Workouts</h2>
 
     <% if (Number(currentUserSessionId) === user.user_id) { %>
-        <section class="nav">
-            <h3><a href="/workouts/new">Start New Workout</a></h3>
-            <!-- add search function to look for old workout -->
-            <h3>Find a Workout</h3> 
-        </section>
+    <section class="nav">
+        <button><a href="/workouts/new">Start new workout</a></button>
+        <!-- <h3>Find a Workout</h3> -->
+    </section>
     <% } %>
-    
+
     <section class="log">
         <h4>Workout Log</h4>
         <div>
             <% for (let workout of workouts) { %>
-                <a href="/workouts/<%=workout.workout_id%>">
-                    <div class="workout_entry">
-                        <div class="workout_details">
-                            <p id="workout_name"><%=workout.name%></p>
-                            <p id="workout_date"><%=workout.to_char%></p>
-                        </div>
-                        <div class="exercise_details">
-                            <% for (const exercise of exercisesInWorkouts) { %>
-                                <% if (workout.workout_id === exercise.workout_id) { %>
-                                        <ul>
-                                            <li class="exercise_name"><%= exercise.name %></li>
-                                        </ul>
-                                    <% } %> 
-                            <% } %> 
-                        </div>
+            <a href="/workouts/<%=workout.workout_id%>">
+                <div class="workout_entry">
+                    <div class="workout_details">
+                        <p id="workout_name"><%=workout.name%></p>
+                        <p id="workout_date"><%=workout.to_char%></p>
                     </div>
-                </a> 
+                    <div class="exercise_details">
+                        <% for (const exercise of exercisesInWorkouts) { %> <%
+                        if (workout.workout_id === exercise.workout_id) { %>
+                        <ul>
+                            <li class="exercise_name"><%= exercise.name %></li>
+                        </ul>
+                        <% } %> <% } %>
+                    </div>
+                </div>
+            </a>
             <% } %>
-        </div>  
+        </div>
     </section>
 </body>

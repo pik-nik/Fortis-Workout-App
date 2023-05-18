@@ -1,25 +1,58 @@
-* {
-    /* border: 1px solid red; */
-}
+/* nav btns */
 .nav {
-    display: grid; 
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    justify-content: center;
     padding-bottom: 15px;
 }
 
 .nav h3 a:hover {
-    color: #4B2374;
+    color: #4b2374;
 }
+
+.nav button {
+    background: #989898;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 15px;
+    margin: 5px auto 10px auto;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.nav button a {
+    color: #fff;
+}
+
+.nav button:hover {
+    background-color: #522d80;
+}
+
+@media screen and (max-width: 768px) {
+    .nav {
+        padding-bottom: 10px;
+    }
+    .nav button {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+}
+
+/* log */
 
 .log {
     width: 80%;
     margin: 0 auto;
 }
 
+.log h4 {
+    text-transform: uppercase;
+    font-size: 2rem;
+}
+
 .workout_entry {
-    background-color: #32174d ;
+    background-color: #32174d;
     color: white;
-    display: grid; 
+    display: grid;
     grid-template-columns: 40% 60%;
     margin: 10px 0;
     padding: 10px;
@@ -28,16 +61,8 @@
 }
 
 .workout_entry:hover {
-    background-color: #4B2374;
-    color: white;
-    display: grid; 
-    grid-template-columns: 40% 60%;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px gray;
+    background-color: #4b2374;
 }
-
 
 #workout_name {
     font-size: 1.25em;
@@ -55,7 +80,26 @@
     list-style: none;
     font-size: 0.75em;
     white-space: nowrap;
-    overflow: hidden; 
+    overflow: hidden;
     text-overflow: ellipsis;
     display: block;
+}
+
+@media screen and (max-width: 768px) {
+    .log h4 {
+        text-transform: uppercase;
+        font-size: 1.5rem;
+    }
+
+    #workout_name {
+        font-size: 1em;
+    }
+
+    #workout_date {
+        font-size: 0.5em;
+    }
+
+    .exercise_name {
+        font-size: 0.5em;
+    }
 }

@@ -1,5 +1,5 @@
 <head>
-    <link rel="stylesheet" href="/css/workout_details.css">
+    <link rel="stylesheet" href="/css/workout_details.css" />
 </head>
 <body>
     <section class="workout_details">
@@ -9,89 +9,99 @@
         <p>by <%=user.username%></p>
 
         <% if (Number(userIdLoggedIn) === workout.user_id) { %>
-            <div class="btn-workout">
-                <form action="/workouts/<%=workout.workout_id%>/edit">
-                    <button>edit workout name/date</button>
-                </form>
-                <form action="/workouts/<%=workout.workout_id%>?_method=DELETE" method="post">
-                    <!-- <input type="hidden" name="_method" value="delete" /> -->
-                    <button>delete workout</button>
-                </form>
-            </div>
+        <div class="btns-workout">
+            <form action="/workouts/<%=workout.workout_id%>/edit">
+                <button>edit workout</button>
+            </form>
+            <form
+                action="/workouts/<%=workout.workout_id%>?_method=DELETE"
+                method="post"
+            >
+                <button>delete workout</button>
+            </form>
+        </div>
         <% } %>
-
     </section>
-    
+
     <div class="exercises">
         <h4>Exercises</h4>
         <% for (const exercise of exercises){%>
-            <div class="exercise_log">
-                <div class="exercise_details">
-                    <p class="exercise_name"><%=exercise.name%></p>
-                    <% if (Number(userIdLoggedIn) === workout.user_id) { %>
-                        <div class="btn-exercises">
-                            <form action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/edit">
-                                <button>edit exercise name</button>
-                            </form>
-                            <form action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>?_method=DELETE" method="post">
-                                <input type="hidden" name="junction_id" value="<%=exercise.junction_id%>"/>
-                                <button>delete exercise</button>
-                            </form>
-                        </div>
-                    <% } %>
+        <div class="exercise_log">
+            <div class="exercise_details">
+                <p class="exercise_name"><%=exercise.name%></p>
+                <% if (Number(userIdLoggedIn) === workout.user_id) { %>
+                <div class="btn-exercises">
+                    <form
+                        action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/edit"
+                    >
+                        <button>
+                            <ion-icon name="create"></ion-icon>
+                        </button>
+                    </form>
+                    <form
+                        action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>?_method=DELETE"
+                        method="post"
+                    >
+                        <input
+                            type="hidden"
+                            name="junction_id"
+                            value="<%=exercise.junction_id%>"
+                        />
+                        <button>
+                            <ion-icon name="trash"></ion-icon>
+                        </button>
+                    </form>
                 </div>
+                <% } %>
+            </div>
 
-                <div class="log_details">
-                    <% for (const logdata of logdatas){ %>
-
-                        <% if (logdata.junction_id === exercise.junction_id) {%>
-                            <ul class="sets_list">
-                                <div class="sets_detail">
-                                    <li>sets: <%= logdata.sets%></li>
-                                    <li>reps: <%= logdata.reps%> </li>
-                                    <li>weight: <%= logdata.weight%> kg</li>
-                                </div>
-                                <div class="btn-sets">
-                                    <% if (Number(userIdLoggedIn) === workout.user_id) { %>
-                                        <li>
-                                            <form action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/log/<%=logdata.log_id%>/edit">
-                                                <button>edit this set</button>
-                                            </form>
-                                            
-                                            <form action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/log/<%=logdata.log_id%>?_method=DELETE" method="post">
-                                                <!-- <input type="hidden" name="_method" value="delete" /> -->
-                                                <button>delete this set</button>
-                                            </form>
-                                        </li>
-                                    <% } %>
-                                </div>
-                            </ul>
-                        <% } %>
-                    <% } %>
-                    <% if (Number(userIdLoggedIn) === workout.user_id) { %>
-                        <form action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>">
-                            <button class="btn_add_set">add set</button>
+            <div class="log_details">
+                <% for (const logdata of logdatas){ %> <% if
+                (logdata.junction_id === exercise.junction_id) {%>
+                <div class="log">
+                    <ul class="sets_list">
+                        <li><%= logdata.sets%> x <%= logdata.reps%></li>
+                        <li><%= logdata.weight%> kg</li>
+                    </ul>
+                    <div class="btn-sets">
+                        <% if (Number(userIdLoggedIn) === workout.user_id) { %>
+                        <form
+                            action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/log/<%=logdata.log_id%>/edit"
+                        >
+                            <button>
+                                <ion-icon name="create-outline"></ion-icon>
+                            </button>
                         </form>
-                        
-                    <% } %>
+
+                        <form
+                            action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>/log/<%=logdata.log_id%>?_method=DELETE"
+                            method="post"
+                        >
+                            <button>
+                                <ion-icon name="trash-outline"></ion-icon>
+                            </button>
+                        </form>
+                        <% } %>
+                    </div>
                 </div>
+                <% } %> <% } %> <% if (Number(userIdLoggedIn) ===
+                workout.user_id) { %>
+                <form
+                    action="/workouts/<%=workout.workout_id%>/exercise/<%=exercise.exercise_id%>"
+                >
+                    <button class="btn_add_set">add set</button>
+                </form>
 
-            </div>  
+                <% } %>
+            </div>
+        </div>
 
-        <% } %>
-
-        <% if (Number(userIdLoggedIn) === workout.user_id) { %>
-            <form action="/workouts/<%=workout.workout_id%>/exercise/new">
-                <button class="btn_add_exercise">
-                    add exercise
-                </button>
-            </form>
+        <% } %> <% if (Number(userIdLoggedIn) === workout.user_id) { %>
+        <form action="/workouts/<%=workout.workout_id%>/exercise/new">
+            <button class="btn_add_exercise">add exercise</button>
+        </form>
         <% } %>
     </div>
 </body>
-
-
-
-
 
 <!-- to get exercise id we must define exercise id better -->

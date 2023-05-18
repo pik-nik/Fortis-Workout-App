@@ -1,37 +1,57 @@
+/* workout details */
 .workout_details h3 {
-    font-family: 'Bebas Neue', cursive;
+    font-family: "Bebas Neue", cursive;
     color: #522d80;
     font-size: 3em;
 }
 
-.btn-workout {
+.btns-workout {
     width: 30%;
-    display: grid;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
     margin: 10px auto 20px auto;
-    grid-template-columns: 50% 50%;
 }
 
-.btn-workout button {
+.btns-workout button {
     background: #32174d;
     border-radius: 3px;
     color: #fff;
+    width: 100px;
+    cursor: pointer;
 }
 
-.btn-workout button:hover {
+.btns-workout button:hover {
     background-color: #621da8;
     color: #fff;
 }
 
+@media screen and (max-width: 768px) {
+    .workout_details h3 {
+        font-size: 2.5em;
+    }
+
+    .btns-workout {
+        width: 80%;
+        margin: 10px auto;
+    }
+
+    .btns-workout button {
+        width: 90px;
+        font-size: 0.7em;
+    }
+}
+
+/* exercise details */
 .exercises {
     border: 1px solid black;
     width: 80%;
     margin: 20px auto;
-
-	background: #FAFAFA;
-	padding: 20px;
-	box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
-	border-radius: 10px;
-	border: 6px solid #4B0082;
+    background: #fafafa;
+    padding: 20px;
+    box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+    border-radius: 10px;
+    border: 6px solid #4b0082;
 }
 
 .exercises h4 {
@@ -42,85 +62,150 @@
 .exercise_log {
     margin: 20px auto;
     width: 80%;
-    border:1px solid #DDDDDD;
-	border-radius: 3px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
     display: grid;
     grid-template-columns: 40% 60%;
 }
 
+.exercise_details {
+    position: relative;
+}
+
 .btn-exercises {
-    width: 80%;
-    display: grid;
     margin: 0 auto;
-    grid-template-columns: 50% 50%;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 3px;
+    right: 3px;
 }
 
 .btn-exercises button {
-    /* background: #32174d; */
-    background-color: #621da8;
     border-radius: 3px;
-    color: #fff;
+    border: 2px solid #ffffff00;
+    background-color: #ffffff00;
+    color: black;
+    cursor: pointer;
+    margin: 0 1px;
+}
+
+ion-icon {
+    font-size: 15px;
 }
 
 .btn-exercises button:hover {
-    /* background-color: #621da8; */
     background: #32174d;
     color: #fff;
 }
 
 .exercise_name {
-    padding: 20px 0;
+    padding: 40px 10px;
     color: #522d80;
     font-size: 2em;
 }
 
-.sets_list {
-    padding: 0;
-    display: grid;
-    margin: 0 auto;
-    grid-template-columns: 50% 50%;
+@media screen and (max-width: 768px) {
+    .exercises {
+        width: 90%;
+        margin: 15px auto;
+    }
+    .exercises h4 {
+        font-size: 1.6em;
+    }
+    .exercise_log {
+        display: flex;
+        flex-direction: column;
+    }
+    .exercise_name {
+        font-size: 1.5em;
+        padding: 30px 5px 10px 5px;
+    }
+}
 
+/* sets */
+.log_details {
+    padding: 15px 0;
+}
+
+.log {
+    position: relative;
 }
 
 .sets_list {
-    list-style: none;
-}
-
-.sets_detail {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
+    list-style: none;
+    background-color: #32174d;
+    color: white;
+    margin: 5px;
+}
 
+.btn-sets {
+    position: absolute;
+    top: 0;
+    right: 10px;
 }
 
 .btn-sets form {
-    margin: 6px;
+    margin: 3px;
 }
 
+.btn-sets form button {
+    background-color: #32174d;
+    border: 1px solid #32174d;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-sets form button:hover {
+    background-color: #32174d;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .log_details {
+        padding: 10px 0;
+    }
+
+    .sets_list {
+        padding: 7px;
+        margin: 4px;
+    }
+
+    .btn-sets {
+        right: 7px;
+    }
+
+    .btn-sets form {
+        margin: 2px;
+    }
+}
+
+/* add set and exercise button */
+
+.btn_add_set,
+.btn_add_exercise {
+    background-color: #621da8;
+    border-radius: 3px;
+    color: #fff;
+    margin: 10px;
+    cursor: pointer;
+}
 
 .btn_add_set {
-    /* background: #32174d; */
-    background-color: #621da8;
-    border-radius: 3px;
-    color: #fff;
-    margin:10px;
+    font-size: 0.8em;
 }
-
-.btn_add_set:hover {
-    /* background-color: #621da8; */
-    background: #32174d;
-    color: #fff;
-}
-
 
 .btn_add_exercise {
-    /* background: #32174d; */
-    background-color: #621da8;
-    border-radius: 3px;
-    color: #fff;
-    margin:10px;
+    font-size: 1em;
 }
 
-btn_add_exercise:hover {
-    /* background-color: #621da8; */
+.btn_add_set:hover,
+.btn_add_exercise:hover {
     background: #32174d;
-    color: #fff;
 }

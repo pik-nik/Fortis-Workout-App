@@ -1,28 +1,43 @@
 <head>
-    <link rel="stylesheet" href="/css/form.css">
+    <link rel="stylesheet" href="/css/form.css" />
 </head>
 <body>
     <section class="form_container">
         <h2>Edit workout</h2>
-        <form action="/workouts/<%= workout.workout_id%>?_method=PUT" method="post">
-        <!-- <input type="hidden" name="_method" value="put"/> -->
-        <input type="hidden" name="workout_id" value="<%=workout.workout_id%>"/>
+        <form
+            action="/workouts/<%= workout.workout_id%>?_method=PUT"
+            method="post"
+        >
+            <input
+                type="hidden"
+                name="workout_id"
+                value="<%=workout.workout_id%>"
+            />
             <ul>
                 <li>
                     <label for="date">Date</label>
-                    <input type="date" name="date" value="<%=workout.to_char%>" required/>
+                    <input
+                        type="date"
+                        name="date"
+                        value="<%=workout.to_char%>"
+                        required
+                    />
                     <span>Update the workout date</span>
                 </li>
                 <li>
                     <label for="">Workout Name</label>
-                    <input type="text" name="name" value="<%=workout.name%>" required/>
+                    <input
+                        type="text"
+                        name="name"
+                        value="<%=workout.name%>"
+                        required
+                    />
                     <span>Update the workout name</span>
                 </li>
-                <li>
+                <li class="add-or-edit-btn">
                     <button>Update</button>
                 </li>
             </ul>
         </form>
     </section>
 </body>
-    

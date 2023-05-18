@@ -76,7 +76,7 @@ input[type="reset"] {
     border-bottom: 3px solid #602f6b;
     border-radius: 10px;
     color: #ffffff;
-    margin: 20px auto;
+    margin: 0px auto;
     width: fit-content;
     height: fit-content;
 }
@@ -95,6 +95,7 @@ ul {
     .form_container {
         padding: 10px;
         margin: 30px auto;
+        width: 90%;
     }
     .form_container ul {
         width: 90%;
@@ -179,8 +180,7 @@ ul {
     background-color: rgb(177, 1, 1);
 }
 
-.edit_profile button,
-.edit-password button {
+.add-or-edit-btn button {
     background: #32174d;
     border: none;
     padding: 10px 20px 10px 20px;
@@ -190,8 +190,7 @@ ul {
     font-size: 20px;
 }
 
-.edit_profile button:hover,
-.edit-password button:hover {
+.add-or-edit-btn button:hover {
     background: #4b2374;
     color: #fff;
     cursor: pointer;
@@ -209,8 +208,7 @@ ul {
         font-size: 10px;
     }
 
-    .edit_profile button,
-    .edit-password button {
+    .add-or-edit-btn button {
         padding: 5px 10px;
         font-size: 12px;
     }
