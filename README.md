@@ -4,9 +4,15 @@ As part of GA Software Engineering Immersive course, I have made a workout app :
 
 The criteria was to make a password-protected, full-stack CRUD application that stores data in PostgreSQL in a little over 3 days.
 
-Check it out here: https://fortis.onrender.com/
+[Check it out here](https://fortis.onrender.com/)
 
-Please note that the website is currently not responsive for mobile and tablets. This is a work in process for the next version.
+Note: it may take a few moments for the page to load
+
+To log in, use the test account details here or create an account
+
+Username: test@email.com
+
+Password: testing
 
 ![Picture of my homepage](/public/images/homepage.png)
 
@@ -14,14 +20,16 @@ Please note that the website is currently not responsive for mobile and tablets.
 
 Fortis is latin for "strong". My app encourages users to post their workouts and share it with the community.
 
+![Picture of workout details page](/public/images/workout_details.png)
+
 When logging workouts, users can add/edit/delete exercises, sets, reps and weights.
-![Add an exercise](/public/gifs/addexercise.gif)
+![Add an exercise](/public/gifs/add_exercise.gif)
 
 When creating or editing users, the database will be checked if a username or email already exists and passwords are checked to ensure they match. If not, the user will be redirected to the form and flash messages will appear.
 ![passwords do not match](/public/gifs/flash_messages.gif)
 
 To speed up sign up process, a default profile picture is given to all new users. Users can later update their picture through "edit profile" on their profile page or settings.
-![new user](/public/gifs/create_user.gif)
+![new user](/public/gifs/user_profile.gif)
 
 Whilst buttons to add, edit and delete are shown on user's own workout details page and profile page these buttons do not appear if a user goes to another user's workouts. The edit pages have also been safeguarded such that only the user who made the workout can access it.
 ![safeguarded links and buttons](/public/gifs/safeguarded.gif)
@@ -40,7 +48,7 @@ It didn't take long in the planning process for me to realise the capacity of wh
 
 ## Schema Tables
 
-https://whimsical.com/schema-tables-7GaP9mejisBZZMi44Y4iNH#
+[Check out Whimsical here](https://whimsical.com/schema-tables-7GaP9mejisBZZMi44Y4iNH#)
 
 During class codealongs we had only worked with ideas that required 2 tables – one representing someone using your application (users), and one that stored whatever was the intended purpose of the app. As I began to draw out my ERD, I started adding more and more tables to the mix.
 
@@ -59,15 +67,18 @@ Drawing up my wireframe made it easy for me lay out how each page would look. I 
 
 -   This is the first version and what I submitted as part of my second project for General Assembly Software Engineering Immersive.
 
+# Updates since submission
+
+-   Made the app responsive on phone
+
 # Future features
 
 Here is a list of future features I would like to add:
 
-1. Make the app responsive to phones and websites
-2. Allow the option to copy workouts. In order to do this I will need to add a user log table which is a log of workouts. This will allow a user to do a workout that they did not originally create.
-3. Add more tables including exercise type, equipment used, workout type which will allow more search options for people to find workout or users for specific training styles e.g. powerlifting or bodybuilding.
-4. Allow the choice to make the workout private, only accessible to coach or "friends" or public.
-5. Allow coaches to post workouts for their clients to do.
+1. Allow the option to copy workouts. In order to do this I will need to add a user log table which is a log of workouts. This will allow a user to do a workout that they did not originally create.
+2. Add more tables including exercise type, equipment used, workout type which will allow more search options for people to find workout or users for specific training styles e.g. powerlifting or bodybuilding.
+3. Allow the choice to make the workout private, only accessible to coach or "friends" or public.
+4. Allow coaches to post workouts for their clients to do.
 
 # Dependencies used
 
